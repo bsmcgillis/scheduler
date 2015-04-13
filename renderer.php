@@ -359,6 +359,8 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         $previousendtime = '';
         $canappoint = false;
 
+        $index = 1;
+
         foreach ($booker->slots as $slot) {
 
             $rowdata = array();
@@ -397,7 +399,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
                 $inputname = "slotcheck[{$slot->slotid}]";
                 $inputelm = html_writer::checkbox($inputname, $slot->slotid, $slot->bookedbyme, '', array('class' => 'slotbox'));
             } else {
-                $inputparms = array('type' => 'radio', 'name' => 'slotid', 'value' => $slot->slotid);
+                $inputparms = array('type' => 'radio', 'name' => 'slotid', 'value' => $slot->slotid, 'onclick' => 'document.getElementById("save'.$index.'").parentElement.parentElement.className = ""');
                 if ($slot->bookedbyme) {
                     $inputparms['checked'] = 1;
                 }
@@ -422,6 +424,23 @@ class mod_scheduler_renderer extends plugin_renderer_base {
             $previoustime = $starttime;
             $previousendtime = $endtime;
             $previousdate = $startdate;
+
+
+            $blankRowData[] = format_string($slot->location);
+
+
+            $blankRowData[] = "";
+            $blankRowData[] = "";
+            $blankRowData[] = "";
+            $blankRowData[] = "";
+            $blankRowData[] = html_writer::empty_tag('input', array('type' => 'submit', 'class' => 'bookerbutton', 'id' => 'save'.$index++, 'name' => 'savechoice', 'value' => get_string('savechoice', 'scheduler')));
+            $blankRowData[] = "";
+            $blankRowData[] = "";
+
+            $table->data[] = $blankRowData;
+            $table->rowclasses[] = "hidden";
+
+            unset($blankRowData);
         }
 
         if ($booker->style == 'multi' && $booker->maxselect > 0) {

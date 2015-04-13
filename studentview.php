@@ -19,12 +19,11 @@ require_once($CFG->dirroot.'/mod/scheduler/studentview.controller.php');
 $scheduler->free_late_unused_slots();
 
 $mygroups = groups_get_all_groups($scheduler->courseid, $USER->id, $cm->groupingid, 'g.id, g.name');
-
 // Print intro.
+
 echo $output->mod_intro($scheduler);
 
 // Get past (attended) slots.
-
 $pastslots = $scheduler->get_attended_slots_for_student($USER->id);
 
 if (count($pastslots) > 0) {
@@ -52,9 +51,10 @@ $upcomingslots = $scheduler->get_upcoming_slots_for_student($USER->id);
 
 if (count($upcomingslots) > 0) {
     $slottable = new scheduler_slot_table($scheduler, $scheduler->uses_grades());
-    foreach ($upcomingslots as $slot) {
-        $appointment = $slot->get_student_appointment($USER->id);
 
+    foreach ($upcomingslots as $slot) {
+        echo "hello";
+        $appointment = $slot->get_student_appointment($USER->id);
         if ($slot->is_groupslot() && has_capability('mod/scheduler:seeotherstudentsresults', $context)) {
             $others = new scheduler_student_list($scheduler, $scheduler->uses_grades());
             foreach ($slot->get_appointments() as $otherapp) {

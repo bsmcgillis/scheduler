@@ -14,7 +14,6 @@ require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot.'/mod/scheduler/lib.php');
 require_once($CFG->dirroot.'/mod/scheduler/locallib.php');
 require_once($CFG->dirroot.'/mod/scheduler/renderable.php');
-
 // Read common request parameters.
 $id = optional_param('id', '', PARAM_INT);    // Course Module ID - if it's not specified, must specify 'a', see below.
 $action = optional_param('what', 'view', PARAM_ALPHA);

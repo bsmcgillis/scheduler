@@ -16,7 +16,7 @@ require_once($CFG->dirroot.'/mod/scheduler/locallib.php');
 if (!has_capability('mod/scheduler:manage', $context)) {
     require_capability('mod/scheduler:manageallappointments', $context);
 }
-
+echo "Hi";
 $appointmentid = required_param('appointmentid', PARAM_INT);
 list($slot, $appointment) = $scheduler->get_slot_appointment($appointmentid);
 $studentid = $appointment->studentid;
