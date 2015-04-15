@@ -280,6 +280,8 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         $o = '';
 
         $toggleid = html_writer::random_id('toggle');
+        
+        //$this->page->requires->yui_module('moodle-mod_scheduler-studentlist', 'M.mod_scheduler.studentlist.init'); //DELETE
 
         if ($studentlist->expandable && count($studentlist->students) > 0) {
             $this->page->requires->yui_module('moodle-mod_scheduler-studentlist',
@@ -399,7 +401,15 @@ class mod_scheduler_renderer extends plugin_renderer_base {
                 $inputname = "slotcheck[{$slot->slotid}]";
                 $inputelm = html_writer::checkbox($inputname, $slot->slotid, $slot->bookedbyme, '', array('class' => 'slotbox'));
             } else {
-                $inputparms = array('type' => 'radio', 'name' => 'slotid', 'value' => $slot->slotid, 'onclick' => 'document.getElementById("save'.$index.'").parentElement.parentElement.className = ""');
+                $inputparms = array('type' => 'radio', 'name' => 'slotid', 'value' => $slot->slotid, 
+                  'onclick' => 'if(document.getElementsByClassName("shown").length > 0)  
+                  {document.getElementsByClassName("shown")[0].className = "hidden"}; 
+                   document.getElementById("save'.$index.'").parentElement.parentElement.className = "shown";
+                   document.getElementById("save'.$index.'").parentElement.colSpan = "7"');
+                   //document.getElementById("save'.$index.'").parentElement.style["width"] = "100%"');
+                                    
+//                'onclick' => 'document.getElementById("save'.$index.'").parentElement.parentElement.className = ""', 
+//                'onblur' => 'document.getElementById("save'.$index.'").parentElement.parentElement.className = "hidden"');
                 if ($slot->bookedbyme) {
                     $inputparms['checked'] = 1;
                 }
@@ -427,27 +437,9 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
 
             $blankRowData[] = format_string($slot->location);
-
-
-            $blankRowData[] = "";
-            $blankRowData[] = "";
-            $blankRowData[] = "";
-            $blankRowData[] = "";
-            $blankRowData[] = html_writer::empty_tag('input', array('type' => 'submit', 'class' => 'bookerbutton', 'id' => 'save'.$index++, 'name' => 'savechoice', 'value' => get_string('savechoice', 'scheduler')));
-            $blankRowData[] = "";
-            $blankRowData[] = "";
-
-            $table->data[] = $blankRowData;
-            $table->rowclasses[] = "hidden";
-
-            unset($blankRowData);
-        }
-
-        if ($booker->style == 'multi' && $booker->maxselect > 0) {
-            $this->page->requires->yui_module('moodle-mod_scheduler-limitchoices',
-                            'M.mod_scheduler.limitchoices.init', array($booker->maxselect) );
-        }
-
+            
+            
+            
         $controls = '';
         if (count($booker->groupchoice) > 0) {
             $controls .= get_string('appointfor', 'scheduler');
@@ -467,8 +459,54 @@ class mod_scheduler_renderer extends plugin_renderer_base {
                               array('what' => 'disengage',
                                             'id' => $booker->scheduler->cmid,
                                             'sesskey' => sesskey() ));
-            $controls .= $this->action_link($disengagelink, get_string('disengage', 'scheduler'));
+            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
         }
+
+
+//            $blankRowData[] = "";
+//            $blankRowData[] = "";
+//            $blankRowData[] = "";
+            $blankRowData[] = "";
+            $blankRowData[] = "";
+            $blankRowData[] = "";
+//            $blankRowData[] = html_writer::empty_tag('input', array('type' => 'submit', 'class' => 'bookerbutton', 'id' => 'save'.$index++, 'name' => 'savechoice', 'rowspan' => '7', 'value' => get_string('savechoice', 'scheduler')));
+              $blankRowData[] = html_writer::div($controls, 'bookercontrols', array('id' => 'save'.$index++, 
+                                'style' => 'padding-left:100px'));
+//            $blankRowData[] = "";
+//            $blankRowData[] = "";
+
+            $table->data[] = $blankRowData;
+            $table->rowclasses[] = "hidden row-fluid";
+
+            unset($blankRowData);
+        }
+
+        if ($booker->style == 'multi' && $booker->maxselect > 0) {
+            $this->page->requires->yui_module('moodle-mod_scheduler-limitchoices',
+                            'M.mod_scheduler.limitchoices.init', array($booker->maxselect) );
+        }
+
+//        $controls = '';
+//        if (count($booker->groupchoice) > 0) {
+//            $controls .= get_string('appointfor', 'scheduler');
+//            $choices = $booker->groupchoice;
+//            $choices[0] = get_string('appointsolo', 'scheduler');
+//            ksort($choices);
+//            $controls .= html_writer::select($choices, 'appointgroup', '', '');
+//            $controls .= $this->help_icon('appointagroup', 'scheduler');
+//            $controls .= ' ';
+//        }
+//        $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+//                        'class' => 'bookerbutton', 'name' => 'savechoice',
+//                        'value' => get_string('savechoice', 'scheduler')));
+//        $controls .= ' ';
+//        if ($booker->candisengage) {
+//            $disengagelink = new moodle_url('/mod/scheduler/view.php',
+//                              array('what' => 'disengage',
+//                                            'id' => $booker->scheduler->cmid,
+//                                            'sesskey' => sesskey() ));
+//            $controls .= $this->action_link($disengagelink, get_string('disengage', 'scheduler'));
+//        }
 
         $o = '';
         $o .= html_writer::start_tag('form', array('action' => $booker->actionurl,
@@ -478,7 +516,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $o .= html_writer::table($table);
 
-        $o .= html_writer::div($controls, 'bookercontrols');
+       // $o .= html_writer::div($controls, 'bookercontrols');
 
         $o .= html_writer::end_tag('form');
 
