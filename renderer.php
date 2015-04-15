@@ -452,6 +452,8 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         }
         $controls .= html_writer::empty_tag('input', array('type' => 'submit',
                         'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'onclick' => 'alert("You are registering an appointment for your group. If any members of this group have a conflicting or additional appointment where multiple appointments are not allowed, these appointments will automatically be dropped.")',
+
                         'value' => get_string('savechoice', 'scheduler')));
         $controls .= ' ';
         if ($booker->candisengage) {
