@@ -498,7 +498,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
                         'onclick' => 'confirm("You are registering an appointment for your group. If any members of this group have a conflicting or additional appointment where multiple appointments are not allowed, these appointments will automatically be dropped.")',
                         'value' => get_string('savechoice', 'scheduler')));
             $controls .= ' ';
-            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
+//            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
         }
         elseif ($canDisengage) 
         {
@@ -506,7 +506,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
                         'class' => 'bookerbutton', 'name' => 'savechoice',
                         'value' => get_string('savechoice', 'scheduler')));
             $controls .= ' ';
-            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
+//            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
         }
         else
         {
