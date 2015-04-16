@@ -152,6 +152,7 @@ if ($bookablecnt == 0) {
     echo $output->heading(get_string('slots', 'scheduler'), 3);
     echo html_writer::div($bookingmsg1, 'studentbookingmessage');
     echo html_writer::div($bookingmsg2, 'studentbookingmessage');
+    echo html_writer::div("<p id='buttonAndLink'></p>", "buttonContainer", array('style' => 'text-align: right'));
     echo $output->render($booker);
 }
 

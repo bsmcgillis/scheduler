@@ -761,3 +761,4 @@ class mod_scheduler_renderer extends plugin_renderer_base {
     }
 
 }
+
