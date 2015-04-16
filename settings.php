@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Global configuration settings for the scheduler module.
+ * Global configuration settings for the scheduler module. This is a file. Yes.
  *
  * @package    mod
  * @subpackage scheduler

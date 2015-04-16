@@ -461,8 +461,60 @@ class mod_scheduler_renderer extends plugin_renderer_base {
             $previousdate = $startdate;
 
 
-            $blankRowData[] = format_string($slot->location);
+            $blankRowData[] = format_string($slot->location);                       
             
+        $controls = '';
+        if (count($booker->groupchoice) > 0) {
+            $isGroupChoice = true;
+            $controls .= get_string('appointfor', 'scheduler');
+            $choices = $booker->groupchoice;
+            $choices[0] = get_string('appointsolo', 'scheduler');
+            ksort($choices);
+            $controls .= html_writer::select($choices, 'appointgroup', '', '');
+            $controls .= $this->help_icon('appointagroup', 'scheduler');
+            $controls .= ' ';
+        }
+        else
+        {
+            $isGroupChoice = false;
+        }
+        if ($booker->candisengage) {
+            $canDisengage = true;
+            $disengagelink = new moodle_url('/mod/scheduler/view.php',
+                              array('what' => 'disengage',
+                                            'id' => $booker->scheduler->cmid,
+                                            'sesskey' => sesskey() ));
+        }
+        else
+        {
+            $canDisengage = false;
+        }
+
+        /* Some hacky shit that uses two boolean flags. It works, and I'm not apologizing */
+        if($isGroupChoice && $canDisengage)
+        {
+            $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+                        'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'onclick' => 'confirm("You are registering an appointment for your group. If any members of this group have a conflicting or additional appointment where multiple appointments are not allowed, these appointments will automatically be dropped.")',
+                        'value' => get_string('savechoice', 'scheduler')));
+            $controls .= ' ';
+            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
+        }
+        elseif ($canDisengage) 
+        {
+            $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+                        'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'value' => get_string('savechoice', 'scheduler')));
+            $controls .= ' ';
+            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
+        }
+        else
+        {
+            $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+                        'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'value' => get_string('savechoice', 'scheduler')));
+        }
+
 
 //            $blankRowData[] = "";
             $blankRowData[] = "";
