@@ -39,8 +39,10 @@ if ($action == 'savechoice') {
 
     $requiredcapacity = 1;
     if ($appointgroup) {
+        alert("You are registering an appointment for your group. If any members of this group have a conflicting or additional appointment, these appointments will automatically be dropped.");
         $groupmembers = groups_get_members($appointgroup);
         $requiredcapacity = count($groupmembers);
+
     }
 
     $errormessage = '';
