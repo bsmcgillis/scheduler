@@ -346,6 +346,34 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
     public function render_scheduler_slot_booker(scheduler_slot_booker $booker) {
 
+        
+        $controls = '';
+        if (count($booker->groupchoice) > 0) {
+            $controls .= get_string('appointfor', 'scheduler');
+            $choices = $booker->groupchoice;
+            $choices[0] = get_string('appointsolo', 'scheduler');
+            ksort($choices);
+            $controls .= html_writer::select($choices, 'appointgroup', '', '');
+            $controls .= $this->help_icon('appointagroup', 'scheduler');
+            $controls .= ' ';
+        }
+        $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+                        'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'value' => get_string('savechoice', 'scheduler')));
+        $controls .= ' ';
+        if ($booker->candisengage) {
+            $disengagelink = new moodle_url('/mod/scheduler/view.php',
+                              array('what' => 'disengage',
+                                            'id' => $booker->scheduler->cmid,
+                                            'sesskey' => sesskey() ));
+            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
+        }
+        
+        if ($booker->style == 'multi') {
+            $o .= html_writer::div($controls, 'bookercontrols');
+        }
+
+        
         $table = new html_table();
         $table->head  = array( get_string('date', 'scheduler'), get_string('start', 'scheduler'),
                         get_string('end', 'scheduler'), get_string('location', 'scheduler'),
@@ -362,6 +390,8 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         $canappoint = false;
 
         $index = 1;
+        
+        
 
         foreach ($booker->slots as $slot) {
 
@@ -406,7 +436,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
                   {document.getElementsByClassName("shown")[0].className = "hidden"}; 
                    document.getElementById("save'.$index.'").parentElement.parentElement.className = "shown";
                    document.getElementById("save'.$index.'").parentElement.colSpan = "7"');
-                   //document.getElementById("save'.$index.'").parentElement.style["width"] = "100%"');
+                   //document.getElementById("save'.$index.'").parentElement.style.textAlign = "right";');
                                     
 //                'onclick' => 'document.getElementById("save'.$index.'").parentElement.parentElement.className = ""', 
 //                'onblur' => 'document.getElementById("save'.$index.'").parentElement.parentElement.className = "hidden"');
@@ -442,6 +472,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
             
         $controls = '';
         if (count($booker->groupchoice) > 0) {
+            $isGroupChoice = true;
             $controls .= get_string('appointfor', 'scheduler');
             $choices = $booker->groupchoice;
             $choices[0] = get_string('appointsolo', 'scheduler');
@@ -450,35 +481,62 @@ class mod_scheduler_renderer extends plugin_renderer_base {
             $controls .= $this->help_icon('appointagroup', 'scheduler');
             $controls .= ' ';
         }
-        $controls .= html_writer::empty_tag('input', array('type' => 'submit',
-                        'class' => 'bookerbutton', 'name' => 'savechoice',
-                        'onclick' => 'alert("You are registering an appointment for your group. If any members of this group have a conflicting or additional appointment where multiple appointments are not allowed, these appointments will automatically be dropped.")',
-
-                        'value' => get_string('savechoice', 'scheduler')));
-        $controls .= ' ';
+        else
+        {
+            $isGroupChoice = false;
+        }
         if ($booker->candisengage) {
+            $canDisengage = true;
             $disengagelink = new moodle_url('/mod/scheduler/view.php',
                               array('what' => 'disengage',
                                             'id' => $booker->scheduler->cmid,
                                             'sesskey' => sesskey() ));
+        }
+        else
+        {
+            $canDisengage = false;
+        }
+
+        /* Some hacky shit that uses two boolean flags. It works, and I'm not apologizing. Yet. */
+        if($isGroupChoice && $canDisengage)
+        {
+            $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+                        'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'onclick' => 'confirm("You are registering an appointment for your group. If any members of this group have a conflicting or additional appointment where multiple appointments are not allowed, these appointments will automatically be dropped.")',
+                        'value' => get_string('savechoice', 'scheduler')));
+            $controls .= ' ';
             $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
+        }
+        elseif ($canDisengage) 
+        {
+            $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+                        'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'value' => get_string('savechoice', 'scheduler')));
+            $controls .= ' ';
+            $controls .= "<p>" . $this->action_link($disengagelink, get_string('disengage', 'scheduler')) . "</p>";
+        }
+        else
+        {
+            $controls .= html_writer::empty_tag('input', array('type' => 'submit',
+                        'class' => 'bookerbutton', 'name' => 'savechoice',
+                        'value' => get_string('savechoice', 'scheduler')));
         }
 
 
-//            $blankRowData[] = "";
-//            $blankRowData[] = "";
+
 //            $blankRowData[] = "";
             $blankRowData[] = "";
             $blankRowData[] = "";
             $blankRowData[] = "";
+            $blankRowData[] = "";
+//            $blankRowData[] = "";
 //            $blankRowData[] = html_writer::empty_tag('input', array('type' => 'submit', 'class' => 'bookerbutton', 'id' => 'save'.$index++, 'name' => 'savechoice', 'rowspan' => '7', 'value' => get_string('savechoice', 'scheduler')));
-              $blankRowData[] = html_writer::div($controls, 'bookercontrols', array('id' => 'save'.$index++, 
-                                'style' => 'padding-left:100px'));
+              $blankRowData[] = html_writer::div($controls, 'bookercontrols', array('id' => 'save'.$index++));
 //            $blankRowData[] = "";
 //            $blankRowData[] = "";
 
             $table->data[] = $blankRowData;
-            $table->rowclasses[] = "hidden row-fluid";
+            $table->rowclasses[] = "hidden";
 
             unset($blankRowData);
         }
@@ -488,6 +546,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
                             'M.mod_scheduler.limitchoices.init', array($booker->maxselect) );
         }
 
+        
 //        $controls = '';
 //        if (count($booker->groupchoice) > 0) {
 //            $controls .= get_string('appointfor', 'scheduler');
@@ -518,7 +577,9 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $o .= html_writer::table($table);
 
-       // $o .= html_writer::div($controls, 'bookercontrols');
+        if ($booker->style == 'multi') {
+            $o .= html_writer::div($controls, 'bookercontrols');
+        }
 
         $o .= html_writer::end_tag('form');
 
