@@ -1,3 +1,4 @@
+<?php
 /**
  * This file contains a renderer for the scheduler module
  *
