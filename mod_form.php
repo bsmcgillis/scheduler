@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -23,7 +24,7 @@ class mod_scheduler_mod_form extends moodleform_mod {
 	function definition() {
 
 	    global $CFG, $COURSE, $OUTPUT;
-	    $mform    =& $this->_form;
+	    $mform    =& $this->_form;                
 
 	    $mform->addElement('text', 'name', get_string('name'), array('size'=>'64'));
 	    $mform->setType('name', PARAM_TEXT);
@@ -31,11 +32,24 @@ class mod_scheduler_mod_form extends moodleform_mod {
 
         // Introduction.
         $this->add_intro_editor(false, get_string('introduction', 'scheduler'));
-
+        
 	    $mform->addElement('text', 'staffrolename', get_string('staffrolename', 'scheduler'), array('size'=>'48'));
 	    $mform->setType('staffrolename', PARAM_TEXT);
 		$mform->addRule('staffrolename', get_string('error'), 'maxlength', 255);
 		$mform->addHelpButton('staffrolename', 'staffrolename', 'scheduler');
+        
+        $mform->addElement('text', 'defaultslotduration', get_string('defaultslotduration', 'scheduler'), array('size'=>'2'));
+	    $mform->setType('defaultslotduration', PARAM_INT);
+	    $mform->addHelpButton('defaultslotduration', 'defaultslotduration', 'scheduler');
+        $mform->setDefault('defaultslotduration', 15);
+        
+        $yesno[0] = get_string('no');
+        $yesno[1] = get_string('yes');
+	    $mform->addElement('select', 'allownotifications', get_string('notifications', 'scheduler'), $yesno);
+	    $mform->addHelpButton('allownotifications', 'notifications', 'scheduler');
+        
+        $mform->addElement('header', 'advanced', 'Advanced Options');
+        $mform->setExpanded('advanced', false);
 
 	    $modegroup = array();
 	    $modegroup[] = $mform->createElement('static', 'modeintro', '', get_string('modeintro', 'scheduler'));
@@ -62,11 +76,6 @@ class mod_scheduler_mod_form extends moodleform_mod {
 		$mform->addElement('duration', 'guardtime', get_string('guardtime', 'scheduler'), array('optional' => true));
 	    $mform->addHelpButton('guardtime', 'guardtime', 'scheduler');
 
-	    $mform->addElement('text', 'defaultslotduration', get_string('defaultslotduration', 'scheduler'), array('size'=>'2'));
-	    $mform->setType('defaultslotduration', PARAM_INT);
-	    $mform->addHelpButton('defaultslotduration', 'defaultslotduration', 'scheduler');
-        $mform->setDefault('defaultslotduration', 15);
-
         $mform->addElement('modgrade', 'scale', get_string('grade'));
         $mform->setDefault('scale', 0);
 
@@ -75,11 +84,6 @@ class mod_scheduler_mod_form extends moodleform_mod {
 	    $mform->addElement('select', 'gradingstrategy', get_string('gradingstrategy', 'scheduler'), $gradingstrategy);
 	    $mform->addHelpButton('gradingstrategy', 'gradingstrategy', 'scheduler');
         $mform->disabledIf('gradingstrategy', 'scale', 'eq', 0);
-
-        $yesno[0] = get_string('no');
-        $yesno[1] = get_string('yes');
-	    $mform->addElement('select', 'allownotifications', get_string('notifications', 'scheduler'), $yesno);
-	    $mform->addHelpButton('allownotifications', 'notifications', 'scheduler');
 
         $this->standard_coursemodule_elements();
 
