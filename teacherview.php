@@ -145,14 +145,35 @@ if ($action != 'view') {
     include($CFG->dirroot.'/mod/scheduler/teacherview.controller.php');
 }
 
+if($action == 'addslot' || $action == 'addsession'){
 
-/************************************ View : New single slot form ****************************************/
-if ($action == 'addslot') {
-    $actionurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'addslot', 'subpage' => $subpage, 'id' => $cm->id));
-    $returnurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'view', 'subpage' => $subpage, 'id' => $cm->id));
+    $actionurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'addslot',    'id' => $cm->id, 'subpage' => $subpage));
+    $actionurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'addsession', 'id' => $cm->id, 'subpage' => $subpage));
+
 
     if (!scheduler_has_teachers($context)) {
         print_error('needteachers', 'scheduler', $returnurl);
+    }
+
+    $mform = new scheduler_addsession_form($actionurl, $scheduler, $cm, $usergroups);
+
+    $PAGE->requires->js(new moodle_url('/mod/scheduler/js/src/addslots.js'));
+
+    echo "<a href='#' class='btn btn-default' onclick='toggleForm()'>Switch Form</a>"; 
+
+    if ($mform->is_cancelled()) {
+        redirect($returnurl);
+    } else if ($formdata = $mform->get_data()) {
+        scheduler_action_doaddsession($scheduler, $formdata);
+    } else {
+        echo "<div id='repeated_slot' class='slotForm'>";
+
+
+        echo $output->heading(get_string('addsession', 'scheduler'));
+        $mform->display();
+
+
+        echo "</div>";
     }
 
     $mform = new scheduler_editslot_form($actionurl, $scheduler, $cm, $usergroups);
@@ -163,12 +184,45 @@ if ($action == 'addslot') {
         scheduler_save_slotform ($scheduler, $course, 0, $formdata);
         echo $output->action_message(get_string('oneslotadded', 'scheduler'));
     } else {
+        
+        // Prints <h2>Add single slot</h2>
+        echo "<div id='single_slot' class='slotForm' hidden>";
+
+
+        echo $output->heading(get_string('addsingleslot', 'scheduler'));
+        $mform->display();
+        
+        echo "</div>";
+
+        echo $output->footer($course);
+        die;
+    }
+
+}
+
+/************************************ View : New single slot form ****************************************/
+/*if ($action == 'addslot') {
+    $actionurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'addslot', 'subpage' => $subpage, 'id' => $cm->id));
+    $returnurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'view', 'subpage' => $subpage, 'id' => $cm->id));
+
+    if (!scheduler_has_teachers($context)) {
+        print_error('needteachers', 'scheduler', $returnurl);
+    }
+    $mform = new scheduler_editslot_form($actionurl, $scheduler, $cm, $usergroups);
+
+    if ($mform->is_cancelled()) {
+        redirect($returnurl);
+    } else if ($formdata = $mform->get_data()) {
+        scheduler_save_slotform ($scheduler, $course, 0, $formdata);
+        echo $output->action_message(get_string('oneslotadded', 'scheduler'));
+    } else {
+        // 
         echo $output->heading(get_string('addsingleslot', 'scheduler'));
         $mform->display();
         echo $output->footer($course);
         die;
     }
-}
+}*/
 /************************************ View : Update single slot form ****************************************/
 if ($action == 'updateslot') {
 
@@ -198,7 +252,7 @@ if ($action == 'updateslot') {
 
 }
 /************************************ Add session multiple slots form ****************************************/
-if ($action == 'addsession') {
+/*if ($action == 'addsession') {
 
     $actionurl = new moodle_url('/mod/scheduler/view.php',
                     array('what' => 'addsession', 'id' => $cm->id, 'subpage' => $subpage));
@@ -208,6 +262,7 @@ if ($action == 'addsession') {
     if (!scheduler_has_teachers($context)) {
         print_error('needteachers', 'scheduler', $returnurl);
     }
+
 
     $mform = new scheduler_addsession_form($actionurl, $scheduler, $cm, $usergroups);
 
@@ -221,7 +276,7 @@ if ($action == 'addsession') {
         echo $output->footer($course);
         die;
     }
-}
+}*/
 
 /************************************ Schedule a student form ***********************************************/
 if ($action == 'schedule') {
@@ -333,7 +388,7 @@ if ($action == 'schedulegroup') {
     return -1;
 }
 //****************** Standard view ***********************************************//
-
+echo "In standard view";
 // Clean all late slots (for everybody).
 $scheduler->free_late_unused_slots();
 

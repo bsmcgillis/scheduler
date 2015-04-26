@@ -14,7 +14,9 @@ require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot.'/mod/scheduler/lib.php');
 require_once($CFG->dirroot.'/mod/scheduler/locallib.php');
 require_once($CFG->dirroot.'/mod/scheduler/renderable.php');
-// Read common request parameters.
+
+
+  // Read common request parameters.
 $id = optional_param('id', '', PARAM_INT);    // Course Module ID - if it's not specified, must specify 'a', see below.
 $action = optional_param('what', 'view', PARAM_ALPHA);
 $subaction = optional_param('subaction', '', PARAM_ALPHA);
@@ -39,7 +41,6 @@ $context = context_module::instance($cm->id);
 $PAGE->set_url('/mod/scheduler/view.php', array('id' => $cm->id));
 
 $output = $PAGE->get_renderer('mod_scheduler');
-
 // This is a pre-header selector for downloded documents generation.
 
 if (has_capability('mod/scheduler:manage', $context) || has_capability('mod/scheduler:attend', $context)) {
@@ -48,8 +49,12 @@ if (has_capability('mod/scheduler:manage', $context) || has_capability('mod/sche
     }
 }
 
-// Print the page header.
 
+// Tells moodle that this page requires the jQuery file
+$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/scheduler/js/jquery-2.1.3.js'));
+
+
+// Print the page header.
 $strschedulers = get_string('modulenameplural', 'scheduler');
 $strscheduler  = get_string('modulename', 'scheduler');
 $strtime = get_string('time');
@@ -70,6 +75,7 @@ $PAGE->set_heading($course->fullname);
 
 echo $OUTPUT->header();
 
+
 // route to screen
 
 // teacher side
@@ -83,6 +89,7 @@ if (has_capability('mod/scheduler:manage', $context)) {
     } else if ($action == 'datelist') {
         include($CFG->dirroot.'/mod/scheduler/datelist.php');
     } else {
+         // Action must be to do with a teacher. Let teacherview decide which action
         include($CFG->dirroot.'/mod/scheduler/teacherview.php');
     }
 
