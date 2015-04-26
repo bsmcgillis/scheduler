@@ -162,7 +162,6 @@ if($action == 'addslot' || $action == 'addsession'){
 
     $PAGE->requires->js(new moodle_url('/mod/scheduler/js/src/addslots.js'));
 
-    echo "<a href='#' class='btn btn-default' onclick='toggleForm()'>".get_string('switchform', 'scheduler')."</a>"; 
 
     if ($mform->is_cancelled()) {
         redirect($returnurl);
@@ -170,6 +169,7 @@ if($action == 'addslot' || $action == 'addsession'){
         scheduler_action_doaddsession($scheduler, $formdata);
     } else {
 
+        echo "<a href='#' class='btn btn-default' onclick='toggleForm()'>".get_string('switchform', 'scheduler')."</a>"; 
         // Place repeated slot form and heading inside a div
         echo "<div id='repeated_slot' class='slotForm'>";
 

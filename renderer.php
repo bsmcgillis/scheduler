@@ -347,8 +347,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
     public function render_scheduler_slot_booker(scheduler_slot_booker $booker) {
         
-        debug_print_backtrace();
-        
+               
         $controls = '';
         if (count($booker->groupchoice) > 0)
         {
