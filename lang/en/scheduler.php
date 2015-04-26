@@ -30,7 +30,7 @@ $string['event_bookingremoved'] = 'Scheduler booking removed';
 $string['event_appointmentlistviewed'] = 'Scheduler appointment list viewed';
 
 /* ***** Interface strings ****** */
-
+$string['switchform'] = 'Switch Slot Add Mode';
 $string['onedaybefore'] = '1 day before slot';
 $string['oneweekbefore'] = '1 week before slot';
 $string['action'] = 'Action';

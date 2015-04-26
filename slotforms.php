@@ -306,7 +306,11 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         global $DB;
 
         $mform = $this->_form;
-
+        
+        // TODO: delete the below
+        // // Add a header to make it hidable
+        // $mform->addElement('header', 'appointhead', get_string('addsession', 'scheduler'));
+        
         // Start and end of range
         $mform->addElement('date_selector', 'rangestart', get_string('date', 'scheduler'));
         $mform->setDefault('rangestart', time());
@@ -390,7 +394,7 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         $mform->setDefault('remindersel', -1);
 
         $this->add_action_buttons();
-
+        $mform->closeHeaderBefore('buttonar');
     }
 
     public function validation($data, $files) {
