@@ -543,6 +543,10 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $o .= html_writer::input_hidden_params($booker->actionurl);
 
+        // Hidden parameter for javascript to change whether a student has changed his choice or not
+        $o .= html_writer::empty_tag('input', array('type' => 'hidden', 'id' => 'choiceChanged', 'value' => 'false'));
+        
+
         $buttonCode = "";
         if ($booker->style == 'multi') 
 		{			
