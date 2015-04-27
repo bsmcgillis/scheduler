@@ -89,8 +89,7 @@ if ($bookablecnt == 0) {
     $actionurl = new moodle_url('/mod/scheduler/view.php', array (
         'what' => 'savechoice',
         'id' => $scheduler->cmid,
-        'sesskey' => sesskey(),
-        'acceptappointment' => "false"));
+        'sesskey' => sesskey());
     
     $style = ($scheduler->maxbookings == 1) || ($scheduler->is_group_scheduling_enabled()) ? 'one' : 'multi';
     $booker = new scheduler_slot_booker($scheduler, $USER->id, $actionurl, $style, $bookablecnt);
