@@ -347,6 +347,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
     public function render_scheduler_slot_booker(scheduler_slot_booker $booker) {
         
+        $this->page->requires->js(new moodle_url('/mod/scheduler/js/src/alertuser.js'));
                
         $controls = '';
         if (count($booker->groupchoice) > 0)
@@ -566,6 +567,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $o .= html_writer::end_tag('form');
 
+        echo "<script>testing();</script>";
 
         return $o;
     }
