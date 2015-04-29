@@ -31,13 +31,10 @@ class mod_scheduler_mod_form extends moodleform_mod {
 	    $mform->addElement('text', 'name', get_string('name'), array('size'=>'64'));
 	    $mform->setType('name', PARAM_TEXT);
 	    $mform->addRule('name', null, 'required', null, 'client');
-	    $mform->addHelpButton('name', 'name', 'scheduler');
-
 
         // Introduction.
         $this->add_intro_editor(false, get_string('introduction', 'scheduler'));
-        $mform->addHelpButton('introeditor', 'introduction', 'scheduler');
-
+        
 	    $mform->addElement('text', 'staffrolename', get_string('staffrolename', 'scheduler'), array('size'=>'48'));
 	    $mform->setType('staffrolename', PARAM_TEXT);
 		$mform->addRule('staffrolename', get_string('error'), 'maxlength', 255);
@@ -48,8 +45,8 @@ class mod_scheduler_mod_form extends moodleform_mod {
 	    $mform->addHelpButton('defaultslotduration', 'defaultslotduration', 'scheduler');
         $mform->setDefault('defaultslotduration', 15);
         
-        $yesno[0] = get_string('enable');
-        $yesno[1] = get_string('disable');
+        $yesno[0] = get_string('no');
+        $yesno[1] = get_string('yes');
 	    $mform->addElement('select', 'allownotifications', get_string('notifications', 'scheduler'), $yesno);
 	    $mform->addHelpButton('allownotifications', 'notifications', 'scheduler');
         
@@ -81,8 +78,9 @@ class mod_scheduler_mod_form extends moodleform_mod {
 		$mform->addElement('duration', 'guardtime', get_string('guardtime', 'scheduler'), array('optional' => true));
 	    $mform->addHelpButton('guardtime', 'guardtime', 'scheduler');
 
-        $mform->addElement('modgrade', 'scale', get_string('grade'));
+        $mform->addElement('modgrade', 'scale', get_string('scale', 'scheduler'));
         $mform->setDefault('scale', 0);
+        $mform->addHelpButton('scale', 'scale', 'scheduler');
 
         $gradingstrategy[MEAN_GRADE] = get_string('meangrade', 'scheduler');
         $gradingstrategy[MAX_GRADE] = get_string('maxgrade', 'scheduler');
@@ -91,8 +89,6 @@ class mod_scheduler_mod_form extends moodleform_mod {
         $mform->disabledIf('gradingstrategy', 'scale', 'eq', 0);
 
         $this->standard_coursemodule_elements();
-        $mform->addHelpButton('visible', 'visible', 'scheduler');
-
 
         $this->add_action_buttons();
     }

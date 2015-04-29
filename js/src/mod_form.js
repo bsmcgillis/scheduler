@@ -29,38 +29,27 @@ $('#id_modgrade_type').on('change', function() {
     //Get the parent element
     var parentElement = $("#id_modgrade_scale").parent();
     
-    if (selection == "scale"){
-        //Make sure point elements stay hidden
-        parentElement.children(':nth-child(6)').hide();
-        parentElement.children(':nth-child(7)').hide();
-        parentElement.children(':nth-child(8)').hide();
+    //Hide all the elements
+    parentElement.children(':nth-child(3)').hide();
+    parentElement.children(':nth-child(6)').hide();
+    parentElement.children(':nth-child(9)').hide();
+
+    parentElement.children(':nth-child(4)').hide();
+    parentElement.children(':nth-child(5)').hide();
+
+    parentElement.children(':nth-child(7)').hide();
+    parentElement.children(':nth-child(8)').hide(); 
         
+    if (selection == "scale"){        
         //Show scale elements
         parentElement.children(':nth-child(3)').show();
         parentElement.children(':nth-child(4)').show();
         parentElement.children(':nth-child(5)').show();  
     }
-    else if (selection == "point") {
-        //Make sure scale elements stay hidden
-        parentElement.children(':nth-child(3)').hide();
-        parentElement.children(':nth-child(4)').hide();
-        parentElement.children(':nth-child(5)').hide(); 
-        
+    else if (selection == "point") {        
         //Show point elements
         parentElement.children(':nth-child(6)').show();
         parentElement.children(':nth-child(7)').show();
         parentElement.children(':nth-child(8)').show();
     }  
-    else if (selection == "none") {
-        //If it's none, hide everyone again
-        parentElement.children(':nth-child(3)').hide();
-        parentElement.children(':nth-child(6)').hide();
-        parentElement.children(':nth-child(9)').hide();
-
-        parentElement.children(':nth-child(4)').hide();
-        parentElement.children(':nth-child(5)').hide();
-    
-        parentElement.children(':nth-child(7)').hide();
-        parentElement.children(':nth-child(8)').hide(); 
-    }
 });
