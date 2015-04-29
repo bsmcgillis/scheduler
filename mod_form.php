@@ -80,7 +80,12 @@ class mod_scheduler_mod_form extends moodleform_mod {
 
         $mform->addElement('modgrade', 'scale', get_string('scale', 'scheduler'));
         $mform->setDefault('scale', 0);
+<<<<<<< Updated upstream
         $mform->addHelpButton('scale', 'scale', 'scheduler');
+=======
+		$mform->addHelpButton('scale', 'scale', 'scheduler');
+
+>>>>>>> Stashed changes
 
         $gradingstrategy[MEAN_GRADE] = get_string('meangrade', 'scheduler');
         $gradingstrategy[MAX_GRADE] = get_string('maxgrade', 'scheduler');

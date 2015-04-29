@@ -251,7 +251,7 @@ $string['slotupdated'] = '1 slot updated';
 $string['slotwarning'] = '<strong>Warning: </strong>Moving this slot to the selected time conflicts with the slot(s) listed below. Tick "Ignore scheduling conflicts" if you want to move the slot nevertheless.';
 $string['staffbreakdown'] = 'By {$a}';
 $string['staffmember'] = 'Member of Staff';
-$string['staffrolename'] = 'Role of Meeting Conducter';
+$string['staffrolename'] = 'Role of Meeting Conductor';
 $string['start'] = 'Start';
 $string['startpast'] = 'You can\'t start an empty appointment slot in the past';
 $string['starttime'] = 'Start time';
@@ -368,6 +368,8 @@ $string['staffrolename_help']='
 <p>The title/category of the person that students will be meeting with.</p>
 <p>If for this scheduler students are going to be meeting with various TAs, then "TA" should be entered here. 
 If students will be meeting with Igor the Electrician, "Electrician" should be enetered here.</p>';
+
+$string['switchform'] = 'Switch Slot Add Mode';
 
 $string['visible_help'] = '<p>This determines the visibility of the Scheduler.</p>
 <ul><li><strong><em>Visible:</em></strong> Students can see the Scheduler.</li>
