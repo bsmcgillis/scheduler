@@ -31,9 +31,13 @@ class mod_scheduler_mod_form extends moodleform_mod {
 	    $mform->addElement('text', 'name', get_string('name'), array('size'=>'64'));
 	    $mform->setType('name', PARAM_TEXT);
 	    $mform->addRule('name', null, 'required', null, 'client');
+	    $mform->addHelpButton('name', 'name', 'scheduler');
+
 
         // Introduction.
         $this->add_intro_editor(false, get_string('introduction', 'scheduler'));
+        $mform->addHelpButton('introeditor', 'introduction', 'scheduler');
+
         
 	    $mform->addElement('text', 'staffrolename', get_string('staffrolename', 'scheduler'), array('size'=>'48'));
 	    $mform->setType('staffrolename', PARAM_TEXT);
@@ -80,12 +84,8 @@ class mod_scheduler_mod_form extends moodleform_mod {
 
         $mform->addElement('modgrade', 'scale', get_string('scale', 'scheduler'));
         $mform->setDefault('scale', 0);
-<<<<<<< Updated upstream
         $mform->addHelpButton('scale', 'scale', 'scheduler');
-=======
-		$mform->addHelpButton('scale', 'scale', 'scheduler');
 
->>>>>>> Stashed changes
 
         $gradingstrategy[MEAN_GRADE] = get_string('meangrade', 'scheduler');
         $gradingstrategy[MAX_GRADE] = get_string('maxgrade', 'scheduler');
@@ -94,6 +94,8 @@ class mod_scheduler_mod_form extends moodleform_mod {
         $mform->disabledIf('gradingstrategy', 'scale', 'eq', 0);
 
         $this->standard_coursemodule_elements();
+        $mform->addHelpButton('visible', 'visible', 'scheduler');
+
 
         $this->add_action_buttons();
     }
