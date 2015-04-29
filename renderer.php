@@ -359,7 +359,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
     public function render_scheduler_slot_booker(scheduler_slot_booker $booker) 
     {
-        $this->page->requires->js(new moodle_url('/mod/scheduler/js/jquery-2.1.3.js'));
+        global $DB;
         $this->page->requires->js(new moodle_url('/mod/scheduler/js/src/alertuser.js'));
 
                
@@ -404,7 +404,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $index = 1;
         
-        
+        $hasappointment = false;        
 
         foreach ($booker->slots as $slot) {
 
@@ -453,6 +453,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
                 if ($slot->bookedbyme) {
                     $inputparms['checked'] = 1;
+                    $hasappointment = true;
                 }
                 $inputelm = html_writer::empty_tag('input', $inputparms);
             }
@@ -509,11 +510,11 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         /* If a user is signing up a group appointment and an appointment already exists, warn the user of
          *  a potential drop of previous appointments.
          */
-        if($isGroupChoice && $canDisengage)
+        if($canDisengage && ($hasappointment == true))
         {
             $controls .= html_writer::empty_tag('input', array('type' => 'submit',
                         'class' => 'bookerbutton', 'name' => 'savechoice',
-                        'onclick' => 'alert_user()',
+                        'onclick' => 'return alert_user()',
                         'value' => get_string('savechoice', 'scheduler')));
             $controls .= ' ';
 
@@ -560,7 +561,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         // Hidden parameter for javascript to change whether a student has changed his choice or not
         $o .= html_writer::empty_tag('input', array('type' => 'hidden', 'id' => 'choiceChanged', 'value' => 'false'));
         
-        
+
 
         $buttonCode = "";
         if ($booker->style == 'multi') 
@@ -581,13 +582,10 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $o .= html_writer::end_tag('form');
 
-        // echo "<script>alert(document.getElementById('choiceChanged').value);</script>"; // testing; error: element is null 
-        // echo "<script>testing();</script>"; // testing
-        // echo "<script>$(document).ready(testing);</script>";    // testing
-        // echo "<script>get_choice();</script>";
         // echo "<script>$(document).ready(get_choice);</script>";
-        echo "<script>alert(document.getElementById('choiceChanged').value);</script>";
-        echo "<script>$(document).ready(function(){alert('works');});</script>";
+        // echo "<script>alert(document.getElementById('choiceChanged').value);</script>";
+        // echo "<script>$(document).ready(function(){alert('works');});</script>";
+        // echo "<script>alert('Monkey slider vagina ' + '$hasappointment');</script>";
 
         return $o;
     }
