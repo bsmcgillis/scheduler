@@ -582,11 +582,6 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $o .= html_writer::end_tag('form');
 
-        // echo "<script>$(document).ready(get_choice);</script>";
-        // echo "<script>alert(document.getElementById('choiceChanged').value);</script>";
-        // echo "<script>$(document).ready(function(){alert('works');});</script>";
-        // echo "<script>alert('Monkey slider vagina ' + '$hasappointment');</script>";
-
         return $o;
     }
 
