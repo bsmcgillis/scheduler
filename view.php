@@ -53,7 +53,6 @@ if (has_capability('mod/scheduler:manage', $context) || has_capability('mod/sche
 // Tells moodle that this page requires the jQuery file
 $PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/scheduler/js/jquery-2.1.3.js'));
 
-
 // Print the page header.
 $strschedulers = get_string('modulenameplural', 'scheduler');
 $strscheduler  = get_string('modulename', 'scheduler');

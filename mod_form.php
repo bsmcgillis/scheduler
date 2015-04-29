@@ -1,4 +1,3 @@
-
 <?php
 
 /**
@@ -10,6 +9,9 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+//Require files to include jQuery
+$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/scheduler/js/jquery-2.1.3.js'));
+$PAGE->requires->js(new moodle_url($CFG->wwwroot . '/mod/scheduler/js/src/mod_form.js'));
 
 defined('MOODLE_INTERNAL') || die();
 
