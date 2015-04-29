@@ -151,7 +151,7 @@ if ($action != 'view') {
 if($action == 'addslot' || $action == 'addsession'){
 
     $actionurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'addslot',    'id' => $cm->id, 'subpage' => $subpage));
-    $actionurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'addsession', 'id' => $cm->id, 'subpage' => $subpage));
+    $returnurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'view', 'subpage' => $subpage, 'id' => $cm->id));
 
 
     if (!scheduler_has_teachers($context)) {
@@ -160,7 +160,6 @@ if($action == 'addslot' || $action == 'addsession'){
 
     $mform = new scheduler_addsession_form($actionurl, $scheduler, $cm, $usergroups);
 
-    $PAGE->requires->js(new moodle_url('/mod/scheduler/js/src/addslots.js'));
 
 
     if ($mform->is_cancelled()) {
@@ -196,6 +195,7 @@ if($action == 'addslot' || $action == 'addsession'){
         echo "</div>";
     }
 
+    $PAGE->requires->js(new moodle_url('/mod/scheduler/js/src/addslots.js'));
     echo $output->footer($course);
     die;
 
