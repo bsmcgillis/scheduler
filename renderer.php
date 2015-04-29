@@ -1,3 +1,15 @@
+<script>
+function testing()
+{
+    alert("In testing()");
+
+    var element = document.getElementById("choiceChanged"); // returning null
+    alert("You chose..."); // testing
+    alert(element.value);   // element is null
+    // alert($('#choiceChanged').val());
+    // echo "hello";
+}
+</script>
 <?php
 /**
  * This file contains a renderer for the scheduler module
@@ -345,13 +357,16 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
 
 
-    public function render_scheduler_slot_booker(scheduler_slot_booker $booker) {
-        
+    public function render_scheduler_slot_booker(scheduler_slot_booker $booker) 
+    {
+        $this->page->requires->js(new moodle_url('/mod/scheduler/js/jquery-2.1.3.js'));
         $this->page->requires->js(new moodle_url('/mod/scheduler/js/src/alertuser.js'));
+
                
         $controls = '';
         if (count($booker->groupchoice) > 0)
         {
+            $isGroupChoice = true;
             $controls .= get_string('appointfor', 'scheduler');
             $choices = $booker->groupchoice;
             $choices[0] = get_string('appointsolo', 'scheduler');
@@ -507,7 +522,6 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         {
             $controls .= html_writer::empty_tag('input', array('type' => 'submit',
                         'class' => 'bookerbutton', 'name' => 'savechoice',
-                        'onclick' => 'alert_user()',                            //TODO: delete this
                         'value' => get_string('savechoice', 'scheduler')));
             $controls .= ' ';
         }
@@ -515,7 +529,6 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         {
             $controls .= html_writer::empty_tag('input', array('type' => 'submit',
                         'class' => 'bookerbutton', 'name' => 'savechoice',
-                        'onclick' => 'alert_user()',                            //TODO: see above for a short description of what to do with this line of code. I just realized that I could have just typed the same message as above and it would have been much shorter, but my backspace button isn't working. 
                         'value' => get_string('savechoice', 'scheduler')));
         }
 
@@ -547,6 +560,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         // Hidden parameter for javascript to change whether a student has changed his choice or not
         $o .= html_writer::empty_tag('input', array('type' => 'hidden', 'id' => 'choiceChanged', 'value' => 'false'));
         
+        
 
         $buttonCode = "";
         if ($booker->style == 'multi') 
@@ -567,7 +581,13 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
         $o .= html_writer::end_tag('form');
 
-        echo "<script>testing();</script>";
+        // echo "<script>alert(document.getElementById('choiceChanged').value);</script>"; // testing; error: element is null 
+        // echo "<script>testing();</script>"; // testing
+        // echo "<script>$(document).ready(testing);</script>";    // testing
+        // echo "<script>get_choice();</script>";
+        // echo "<script>$(document).ready(get_choice);</script>";
+        echo "<script>alert(document.getElementById('choiceChanged').value);</script>";
+        echo "<script>$(document).ready(function(){alert('works');});</script>";
 
         return $o;
     }
