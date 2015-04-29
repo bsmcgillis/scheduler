@@ -1,21 +1,21 @@
 <?php
-
 $string['pluginname'] = 'Scheduler';
-$string['pluginadministration'] = 'Scheduler administration';
+$string['pluginadministration'] = 'Administración de Scheduler';
 $string['modulename'] = 'Scheduler';
-$string['modulename_help'] = 'The scheduler activity helps you schedule appointments with students.
+$string['modulename_help'] = 'La actividad de Scheduler le ayuda en la programación de citas con sus estudiantes.
 
-Teachers specify time slots for meetings and students can then use Moodle to sign up for a time to meet.
-Teachers in turn can record the outcome of the meeting (and optionally a grade).
+Profesores especifican los intervalos de tiempo para las reuniones, y luego los estudiantes elijan una de ellas en Moodle.
+Los profesores, a su vez pueden registrar el resultado de la reunión - y opcionalmente un grado - en el planificador (Scheduler).
 
-Group scheduling is also supported. Each time slot can accommodate several students, and it is possible to schedule appointments for entire groups at the same time.';
+Agenda de grupos se apoya; es decir, cada intervalo de tiempo se puede acomodar a varios estudiantes, y opcionalmente es posible programar citas para grupos enteros al mismo tiempo.';
+
 $string['modulename_link'] = 'mod/scheduler/view';
 $string['modulenameplural'] = 'Schedulers';
 
 /* ***** Capabilities ****** */
 $string['scheduler:addinstance'] = 'Añadir un nuevo planificador';
-$string['scheduler:appoint'] = 'Appoint';
-$string['scheduler:attend'] = 'Attend students';
+$string['scheduler:appoint'] = 'Nombrar';
+$string['scheduler:attend'] = 'Asistir a los estudiantes';
 $string['scheduler:canscheduletootherteachers'] = 'Schedule appointments for other staff members';
 $string['scheduler:canseeotherteachersbooking'] = 'See and browse other teachers booking';
 $string['scheduler:disengage'] = 'Drop all appointments (students)';
@@ -31,7 +31,7 @@ $string['event_bookingremoved'] = 'Scheduler booking removed';
 $string['event_appointmentlistviewed'] = 'Scheduler appointment list viewed';
 
 /* ***** Interface strings ****** */
-
+$string['switchform'] = 'Switch Slot Add Mode';
 $string['onedaybefore'] = '1 day before slot';
 $string['oneweekbefore'] = '1 week before slot';
 $string['action'] = 'Action';
@@ -75,11 +75,11 @@ $string['break'] = 'Break between slots';
 $string['breaknotnegative'] = 'Length of the break must not be negative';
 $string['cancelledbystudent'] = '{$a} : Appointment cancelled or moved by a student';
 $string['cancelledbyteacher'] = '{$a} : Appointment cancelled by the teacher';
-$string['canbooksingleappointment'] = 'You can book one appointment within this scheduler.';
-$string['canbook1appointment'] = 'You can book one more appointment within this scheduler.';
-$string['canbooknappointments'] = 'You can book {$a} more appointments within this scheduler.';
-$string['canbooknofurtherappointments'] = 'You cannot book further appointments within this scheduler.';
-$string['canbookunlimitedappointments'] = 'You can book any number of appointments within this scheduler.';
+$string['canbooksingleappointment'] = 'You can book one appointment in this scheduler.';
+$string['canbook1appointment'] = 'You can book one more appointment in this scheduler.';
+$string['canbooknappointments'] = 'You can book {$a} more appointments in this scheduler.';
+$string['canbooknofurtherappointments'] = 'You cannot book further appointments in this scheduler.';
+$string['canbookunlimitedappointments'] = 'You can book any number of appointments in this scheduler.';
 $string['choice'] = 'Choice';
 $string['chooseexisting'] = 'Choose existing';
 $string['choosingslotstart'] = 'Choosing the start time';
@@ -97,7 +97,7 @@ $string['cumulatedduration'] = 'Summed duration of appointments';
 $string['date'] = 'Date';
 $string['datelist'] = 'Overview';
 $string['defaultslotduration'] = 'Default slot duration';
-$string['defaultslotduration_help'] = 'The default time length (in minutes) for the appointment slots';
+$string['defaultslotduration_help'] = 'The default length (in minutes) for appointment slots that you set up';
 $string['deleteallslots'] = 'Delete all slots';
 $string['deleteallunusedslots'] = 'Delete unused slots';
 $string['deletecommands'] = 'Delete slots';
@@ -135,9 +135,9 @@ $string['forcourses'] = 'Choose students in courses';
 $string['friday'] = 'Friday';
 $string['generalconfig'] = 'General configuration';
 $string['grade'] = 'Grade';
-$string['gradingstrategy'] = 'Grading multiple appointments';
-$string['gradingstrategy_help'] = 'Select how a student\'s grade will be determined if a student has several graded appointments.
-    The gradebook will show either: <ul><li>The mean grade</li><li>The maximum grade</li></ul>';
+$string['gradingstrategy'] = 'Grading strategy';
+$string['gradingstrategy_help'] = 'In a scheduler where students can have several appointments, select how grades are aggregated.
+    The gradebook can show either <ul><li>the mean grade or</li><li>the maximum grade</li></ul> that the student has achieved.';
 $string['group'] = 'group ';
 $string['groupbreakdown'] = 'By group size';
 $string['groupscheduling'] = 'Enable group scheduling';
@@ -145,13 +145,13 @@ $string['groupscheduling_desc'] = 'Allow entire groups to be scheduled at once.
 (Apart from the global option, the activity group mode must be set to "Visible groups" or "Separate groups" in order to enable this feature.)';
 $string['groupsession'] = 'Group session';
 $string['groupsize'] = 'Group size';
-$string['guardtime'] = 'Guard Time';
+$string['guardtime'] = 'Guard time';
 $string['guestscantdoanything'] = 'Guests can\'t do anything here.';
 $string['howtoaddstudents'] = 'For adding students to a global scoped scheduler, use the role setting for the module.<br/>You may also use module role definitions to define the attenders of your students.';
 $string['ignoreconflicts'] = 'Ignore scheduling conflicts';
 $string['ignoreconflicts_help'] = 'If this box is ticked, then the slot will be moved to the requested date and time, even if other slots exist at the same time. This may lead to overlapping appointments for some teachers or students, and should therefore be used with care.';
 $string['incourse'] = ' in course ';
-$string['introduction'] = 'Description';
+$string['introduction'] = 'Introduction';
 $string['invitation'] = 'Invitation';
 $string['invitationtext'] = 'Please choose a time-slot for an appointment at ';
 $string['isnonexclusive'] = 'Non-exclusive';
@@ -160,12 +160,12 @@ $string['limited'] = 'Limited ({$a} left)';
 $string['location'] = 'Location';
 $string['markseen'] = 'After you have had an appointment with a student please mark them as "Seen" by clicking the checkbox near to their user picture above.';
 $string['markasseennow'] = 'Mark as seen now';
-$string['maxgrade'] = 'User the highest grade';
+$string['maxgrade'] = 'Take the highest grade';
 $string['maxstudentsperslot'] = 'Maximum number of students per slot';
 $string['maxstudentsperslot_desc'] = 'Group slots / non-exclusive slots can have at most this number of students. Note that in addition, the setting "unlimited" can always be chosen for a slot.';
 $string['maxstudentlistsize'] = 'Maximum length of student list';
 $string['maxstudentlistsize_desc'] = 'The maximum length of the list of students who need to make an appointment, as shown in the teacher view of the scheduler. If there are more students than this, no list will be displayed.';
-$string['meangrade'] = 'Use the mean grade';
+$string['meangrade'] = 'Take the mean grade';
 $string['meetingwith'] = 'Meeting with your';
 $string['meetingwithplural'] = 'Meeting with your';
 $string['mins'] = 'minutes';
@@ -173,10 +173,10 @@ $string['minutes'] = 'minutes';
 $string['minutesperslot'] = 'minutes per slot';
 $string['missingstudents'] = '{$a} students still need to make an appointment';
 $string['missingstudentsmany'] = '{$a} students still need to make an appointment. No list is being displayed due to size.';
-$string['mode'] = 'Appointment Limit Mode';
+$string['mode'] = 'Mode';
 $string['modeintro'] = 'Students can register';
 $string['modeappointments'] = 'appointment(s)';
-$string['modeoneonly'] = 'in this entire scheduler';
+$string['modeoneonly'] = 'in this scheduler';
 $string['modeoneatatime'] = 'at a time';
 $string['monday'] = 'Monday';
 $string['move'] = 'Change';
@@ -228,7 +228,6 @@ $string['save'] = 'Save';
 $string['savechoice'] = 'Save my choice';
 $string['savecomment'] = 'Save the comment';
 $string['saveseen'] = 'Save seen';
-$string['scale'] = 'Grading Scale';
 $string['schedule'] = 'Schedule';
 $string['scheduleappointment'] = 'Schedule appointment for {$a}';
 $string['schedulecancelled'] = '{$a} : Your appointment cancelled or moved';
@@ -251,7 +250,7 @@ $string['slotupdated'] = '1 slot updated';
 $string['slotwarning'] = '<strong>Warning: </strong>Moving this slot to the selected time conflicts with the slot(s) listed below. Tick "Ignore scheduling conflicts" if you want to move the slot nevertheless.';
 $string['staffbreakdown'] = 'By {$a}';
 $string['staffmember'] = 'Member of Staff';
-$string['staffrolename'] = 'Role of Meeting Conducter';
+$string['staffrolename'] = 'Role name of the teacher';
 $string['start'] = 'Start';
 $string['startpast'] = 'You can\'t start an empty appointment slot in the past';
 $string['starttime'] = 'Start time';
@@ -283,7 +282,6 @@ $string['upcomingslots'] = 'Upcoming slots';
 $string['updategrades'] = 'Update grades';
 $string['updatesingleslot'] = '';
 $string['updatingappointment'] = 'Updating an appointment';
-$string['visible'] = 'Visible to students';
 $string['wednesday'] = 'Wednesday';
 $string['welcomebackstudent'] = 'The <strong>bold line</strong> in the table below highlights your chosen appointment time. You can change to any other available slot.';
 $string['welcomenewstudent'] = 'The table below shows all available slots for an appointment. Make your choice by selecting a radiobutton and don\'t forget to click on "Save my choice" afterwards. If you need to make a change later you can revisit this page.';
@@ -303,21 +301,22 @@ $string['yourslotnotes'] = 'Comments on the meeting';
 
 /* ***********  Help strings from here on ************ */
 
+$string['forcewhenoverlap_help']='
+<h3>Forcing slot creation when slots overlap</h3>
+<p>This setting determines how new slots will be handled if they overlap with other, already existing slots.</p>
+<p>If enabled, the overlapping existing slot will be deleted and the new slot created.</p>
+<p>If disabled, the overlapping existing slot will be kept and a new slot will <em>not</em> be created.</p>
+';
+
 $string['addscheduled_help']='
 <h3>Adding an appointment on slot setup</h3>
 <p>Using this link, you will add a user to the appointment list defined by this slot information. It may be a simple and fast way to setup a collective appointment. </p>';
 
-$string['appointmentmode'] = 'Setting the appointment limit mode';
-$string['appointmentmode_help']='
-<p>You can either limit a student\'s total appointments throughout the scheduler or limit how many "open" (i.e. unseen) meetings a student can have on the scheduler at once.</p>
+$string['appointmentmode'] = 'Setting the appointment mode';
+$string['appointmentmode_help']='<p>You may choose here some variants in the way appointments can be taken. </p>
 <p><ul>
-<li><strong>"in this entire scheduler":</strong> 
-The student can only book up to <strong><em>the selected number</em></strong> of appointments during this schduler.</li>
-
-<li><strong>"at a time":</strong> 
-The student can only have up to <strong><em>the selected number</em></strong> of open appointments. 
-Once the meeting is over and the teacher has marked the student as "seen", the student can book further appointments. 
-However the student is limited to having up to <strong><em>the selected number</em></strong> of "open" (unseen) appointments at any given time.
+<li><strong>"<emph>n</emph> appointments in this scheduler":</strong> The student can only book a fixed number of appointments in this activity. Even if the teacher marks them as "seen", they will not be allowed to book further meetings. The only way to reset ability of a student to book is to delete the old "seen" records.</li>
+<li><strong>"<emph>n</emph> appointments at a time":</strong> The student can book a fixed number of appointments. Once the meeting is over and the teacher has marked the student as "seen", the student can book further appointments. However the student is limited to <emph>n</emph> "open" (unseen) slots at any given time.
 </li>
 </ul>
 </p>';
@@ -335,44 +334,16 @@ $string['exclusivity_help']='<p>You can set a limit on the amount of students th
 <p>If the slot is set to unlimited number (0), this slot will never be considered in constraints evaluation, even if other slots are exclusive or limited in the same time range.
 </p>';
 
-$string['forcewhenoverlap_help']='
-<h3>Forcing slot creation when slots overlap</h3>
-<p>This setting determines how new slots will be handled if they overlap with other, already existing slots.</p>
-<p>If enabled, the overlapping existing slot will be deleted and the new slot created.</p>
-<p>If disabled, the overlapping existing slot will be kept and a new slot will <em>not</em> be created.</p>';
-
-$string['guardtime_help'] = '
-<p>A Guard prevents students from changing their booking shortly before an appointment. 
-Once the Guard Time for an appointment has been passed, students are prevented from altering their appointment. 
-A Guard Time represents a time window before an appointment. Once within that time window, appointments cannot be altered.</p>
-
-<p> Example: A student has an appointment at 3:00. The Guard Time is enabled and set to 1 hour. 
-At 1:59 the student would be able to alter their appointment, but at 2:01 the student will be unable to alter their appointment.</p>';
-
-$string['introduction_help']= '
-<p>The description will be shown to students as they sign up for a meeting slot.</p>
-<p>The description will often include any instructions or requirements for the meetings. It can also include any clarification 
-that the instructor wants to give regarding the content or format of the meetings.</p>';
-
 $string['location_help']='Specify the scheduled location of the meeting.';
 
-$string['name_help'] = 'Name of the scheduler. This is the name that users will see as the title of the scheduler.';
-
-$string['notifications_help']='When this option is enabled, teachers and students will receive notifications when appointments are requested or cancelled.';
-
-$string['scale_help'] = '
-<p>Select if the meetings will be graded.</p>
-<p>If meetings will be graded, instructors can select the grading scale that will be used.</p>';
+$string['notifications_help']='When this option is enabled, teachers and students will receive notifications when appointments are applied for or cancelled.';
 
 $string['staffrolename_help']='
-<p>The title/category of the person that students will be meeting with.</p>
-<p>If for this scheduler students are going to be meeting with various TAs, then "TA" should be entered here. 
-If students will be meeting with Igor the Electrician, "Electrician" should be enetered here.</p>';
+The label for the role who attends students. This is not necessarily a "teacher".';
 
-$string['visible_help'] = '<p>This determines the visibility of the Scheduler.</p>
-<ul><li><strong><em>Visible:</em></strong> Students can see the Scheduler.</li>
-<li><strong><em>Hidden:</em></strong> Students can not see the Scheduler</li></ul>';
-
+$string['guardtime_help'] = 'A guard time prevents students from changing their booking shortly before the appointment.
+<p>If the guard time is enabled and set to, for example, 2 hours, then students will be unable to book a slot that starts in less than 2 hours time from now,
+and they will be unable to drop an appointment if it start in less than 2 hours.</p>';
 
 /* ***********  E-mail templates from here on ************ */
 

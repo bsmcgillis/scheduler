@@ -1,5 +1,3 @@
-
-
 // Return a flag (could be a string or a boolean) to the "onsubmit" part of form in renderer
 // Should be returned to renderer. Might also have to add (or edit) to studentview:89
 
@@ -21,11 +19,12 @@ function alert_user()
     var sameelement = document.getElementById("choiceChanged"); // testing
     alert("You chose " + sameelement.value); // testing
 
-    get_choice();
+    // get_choice();
+
+    return choice;
 }
 
-function get_choice()
-{
-	var choice = document.getElementById("choiceChanged").value;
-	alert("The returned choice was " + choice);
-}
+// $(function get_choice() {
+//   	var choice = document.getElementById("choiceChanged").value;
+// 	alert("The returned choice was " + choice);
+// });
