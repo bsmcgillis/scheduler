@@ -354,16 +354,16 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         $minutes = array();
         for ($i=0; $i<=23; $i++) {
             if($i == 0){
-                $hours[$i] = sprintf("%02d", 12) . " am";
+                $hours[$i] = sprintf("%d", 12) . " am";
             }
             elseif($i < 12){
-                $hours[$i] = sprintf("%02d", $i) . " am";
+                $hours[$i] = sprintf("%d", $i) . " am";
             }
             elseif($i == 12){
-                $hours[$i] = sprintf("%02d", 12) . " pm";
+                $hours[$i] = sprintf("%d", 12) . " pm";
             }
             else{
-                $hours[$i] = sprintf("%02d", $i-12) . " pm";
+                $hours[$i] = sprintf("%d", $i-12) . " pm";
             }
         }
         for ($i=0; $i<60; $i+=5) {
