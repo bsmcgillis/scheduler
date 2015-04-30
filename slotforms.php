@@ -125,11 +125,15 @@ class scheduler_editslot_form extends scheduler_slotform_base {
         }
 
         // Start date/time of the slot
-        $mform->addElement('date_time_selector', 'starttime', get_string('date', 'scheduler'));
+        $mform->addElement('date_time_selector', 'starttime', get_string('dateandtime', 'scheduler'));
         $mform->setDefault('starttime', time());
+        $mform->addHelpButton('starttime', 'dateandtime', 'scheduler');
+
 
         // Duration of the slot
         $this->add_duration_field();
+        $this->_form->addHelpButton('durationgroup', 'duration', 'scheduler');
+
 
         // Ignore conflict checkbox
         $mform->addElement('checkbox', 'ignoreconflicts', get_string('ignoreconflicts', 'scheduler'));
@@ -349,7 +353,18 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         $hours = array();
         $minutes = array();
         for ($i=0; $i<=23; $i++) {
-            $hours[$i] = sprintf("%02d", $i);
+            if($i == 0){
+                $hours[$i] = sprintf("%02d", 12) . " am";
+            }
+            elseif($i < 12){
+                $hours[$i] = sprintf("%02d", $i) . " am";
+            }
+            elseif($i == 12){
+                $hours[$i] = sprintf("%02d", 12) . " pm";
+            }
+            else{
+                $hours[$i] = sprintf("%02d", $i-12) . " pm";
+            }
         }
         for ($i=0; $i<60; $i+=5) {
             $minutes[$i] = sprintf("%02d", $i);
@@ -375,9 +390,12 @@ class scheduler_addsession_form extends scheduler_slotform_base {
 
         // Duration of the slot
         $this->add_duration_field('minutesperslot');
+        $this->_form->addHelpButton('durationgroup', 'duration', 'scheduler');
+
 
         // Break between slots
         $this->add_minutes_field('break', 'break', 0, 'minutes');
+        $mform->addHelpButton('breakgroup', 'break', 'scheduler');
 
         // Force when overlap?
         $mform->addElement('selectyesno', 'forcewhenoverlap', get_string('forcewhenoverlap', 'scheduler'));
@@ -448,6 +466,16 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         if ($data['rangestart'] < time() - DAYSECS) {
             $errors['rangestart'] = get_string('startpast', 'scheduler');
         }
+		
+		if($starttime < time () - DAYSECS)
+		{
+			$errors['starttime'] = get_string('starttimeinpast', 'scheduler');
+		}
+		
+		if($endtime < time() - DAYSECS)
+		{
+			$errors['endtime'] = get_string('endtimeinpast', 'scheduler');
+		}
 
         // Break must be nonnegative
         if ($data['break'] < 0) {

@@ -52,6 +52,7 @@ $string['allslotsincloseddays'] = 'All slots were in closed days';
 $string['allteachersgrading'] = 'Teachers can grade all appointments';
 $string['allteachersgrading_desc'] = 'When enabled, teachers can grade appointments they are not assigned to.';
 $string['alreadyappointed'] = 'Cannot make the appointment. The slot is already fully booked.';
+$string['appointmentmode'] = 'Setting the appointment limit mode';
 $string['appointagroup'] = 'Group appointment';
 $string['appointfor'] = 'Appoint for ';
 $string['appointformygroup'] = 'Appoint for my whole group';
@@ -97,6 +98,7 @@ $string['csvparms'] = 'csv format parameters';
 $string['csvrecordseparator'] = 'Records separator for csv';
 $string['cumulatedduration'] = 'Summed duration of appointments';
 $string['date'] = 'Date';
+$string['dateandtime'] = 'Date';
 $string['datelist'] = 'Overview';
 $string['defaultslotduration'] = 'Default slot duration';
 $string['defaultslotduration_help'] = 'The default time length (in minutes) for the appointment slots';
@@ -123,6 +125,7 @@ $string['emailreminderondate'] = 'Email a reminder on';
 $string['end'] = 'End';
 $string['enddate'] = 'Repeat until';
 $string['endtime'] = 'End time';
+$string['endtimeinpast'] = 'You scheduled appointment times in the past, please review';
 $string['exclusive'] = 'Exclusive';
 $string['exclusivity'] = 'Exclusivity';
 $string['exclusivitylockedto'] = 'You cannot change the slot mode when scheduling. The current limit of the destination slot will apply. If the slot is new, a default limit of 1 will apply.';
@@ -260,6 +263,7 @@ $string['start'] = 'Start';
 $string['startdate'] = 'Start Date';
 $string['startpast'] = 'You can\'t start an empty appointment slot in the past';
 $string['starttime'] = 'Start time';
+$string['starttimeinpast'] = 'Your desired start time is in the past, please review';
 $string['statistics'] = 'Statistics';
 $string['strdownloadcsvgrades'] = 'CSV Export of grades';
 $string['strdownloadcsvslots'] = 'CSV Export of slots';
@@ -313,30 +317,29 @@ $string['addscheduled_help']='
 <h3>Adding an appointment on slot setup</h3>
 <p>Using this link, you will add a user to the appointment list defined by this slot information. It may be a simple and fast way to setup a collective appointment. </p>';
 
-$string['appointmentmode'] = 'Setting the appointment limit mode';
 $string['appointmentmode_help']='
 <p>You can either limit a student\'s total appointments throughout the scheduler or limit how many "open" (i.e. unseen) meetings a student can have on the scheduler at once.</p>
-<p><ul>
-<li><strong>"in this entire scheduler":</strong> 
+<p><ul><li><strong>"in this entire scheduler":</strong> 
 The student can only book up to <strong><em>the selected number</em></strong> of appointments during this schduler.</li>
 
 <li><strong>"at a time":</strong> 
 The student can only have up to <strong><em>the selected number</em></strong> of open appointments. 
 Once the meeting is over and the teacher has marked the student as "seen", the student can book further appointments. 
-However the student is limited to having up to <strong><em>the selected number</em></strong> of "open" (unseen) appointments at any given time.
-</li>
-</ul>
-</p>';
+However the student is limited to having up to <strong><em>the selected number</em></strong> of "open" (unseen) appointments at any given time.</li></ul></p>';
 
 $string['appointagroup_help'] = 'Choose whether you want to make the appointment only for yourself, or for an entire group.';
 
 $string['bookwithteacher_help']='Choose the specific individual who will be meeting with the students for the time slot(s).';
+
+$string['break_help'] = 'Time between appointments. Some common uses of this is a buffer between appointments or as prep time before the next appointment.';
 
 $string['choosingslotstart_help']='Change (or choose) the appointment start time. If this appointment collides with some other slots, you\'ll be asked
 if this slot replaces all conflicting appointments. Note that the new slot parameters will override all previous
 settings.';
 
 $string['comments_help'] = 'Any additional information or comments about this slot';
+
+$string['dateandtime_help'] = 'The date and start time of the slot that is being added';
 
 $string['displayfrom_help'] = '
 <p>Specificy when slots will become visible to students</p>
@@ -347,6 +350,8 @@ Slots will become visibile to students on a rolling basis.</li></p>';
 $string['displayon_help'] = 'The date that this slot will become visible to students';
 
 $string['divide_help'] = 'Divide the scheduler into slots.';
+
+$string['duration_help'] = 'The length of the slot, in minutes';
 
 $string['enddate_help'] = 'The last date that slots will be added to.';
 

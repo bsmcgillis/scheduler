@@ -1,15 +1,3 @@
-<script>
-function testing()
-{
-    alert("In testing()");
-
-    var element = document.getElementById("choiceChanged"); // returning null
-    alert("You chose..."); // testing
-    alert(element.value);   // element is null
-    // alert($('#choiceChanged').val());
-    // echo "hello";
-}
-</script>
 <?php
 /**
  * This file contains a renderer for the scheduler module
@@ -359,7 +347,6 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 
     public function render_scheduler_slot_booker(scheduler_slot_booker $booker) 
     {
-        global $DB;
         $this->page->requires->js(new moodle_url('/mod/scheduler/js/src/alertuser.js'));
 
                
@@ -556,11 +543,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
         $o .= html_writer::start_tag('form', array('action' => $booker->actionurl,
                         'method' => 'post', 'class' => 'bookerform'));
 
-        $o .= html_writer::input_hidden_params($booker->actionurl);
-
-        // Hidden parameter for javascript to change whether a student has changed his choice or not
-        $o .= html_writer::empty_tag('input', array('type' => 'hidden', 'id' => 'choiceChanged', 'value' => 'false'));
-        
+        $o .= html_writer::input_hidden_params($booker->actionurl);       
 
 
         $buttonCode = "";
