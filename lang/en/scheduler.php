@@ -1,5 +1,7 @@
 <?php
 
+$string['test'] = 'this is a test';
+
 $string['pluginname'] = 'Scheduler';
 $string['pluginadministration'] = 'Scheduler administration';
 $string['modulename'] = 'Scheduler';
@@ -38,7 +40,7 @@ $string['action'] = 'Action';
 $string['actions'] = 'Actions';
 $string['addappointment'] = 'Add another student';
 $string['addcommands'] = 'Add slots';
-$string['addondays'] = 'Add appointments on';
+$string['addondays'] = 'Add slots every:';
 $string['addscheduled'] = 'Add scheduled student';
 $string['addsession'] = 'Add repeated slots';
 $string['addsingleslot'] = 'Add single slot';
@@ -109,7 +111,7 @@ $string['department'] = 'From where?';
 $string['disengage'] = 'Drop my appointments';
 $string['displayfrom'] = 'Display appointment to students from';
 $string['distributetoslot'] = 'Distribute to the whole group';
-$string['divide'] = 'Divide into slots?';
+$string['divide'] = 'Divide into slots';
 $string['dontforgetsaveadvice'] = 'You have changed the list of appointed people. Don\'t forget saving this form to commit the changes definitively.';
 $string['downloadexcel'] = 'Exports to Excel';
 $string['downloads'] = 'Exports';
@@ -118,7 +120,7 @@ $string['durationrange'] = 'Slot duration must be between {$a->min} and {$a->max
 $string['emailreminder'] = 'Email a reminder';
 $string['emailreminderondate'] = 'Email a reminder on';
 $string['end'] = 'End';
-$string['enddate'] = 'Repeat time slots until';
+$string['enddate'] = 'Repeat until';
 $string['endtime'] = 'End time';
 $string['exclusive'] = 'Exclusive';
 $string['exclusivity'] = 'Exclusivity';
@@ -253,6 +255,7 @@ $string['staffbreakdown'] = 'By {$a}';
 $string['staffmember'] = 'Member of Staff';
 $string['staffrolename'] = 'Role of Meeting Conductor';
 $string['start'] = 'Start';
+$string['startdate'] = 'Start Date';
 $string['startpast'] = 'You can\'t start an empty appointment slot in the past';
 $string['starttime'] = 'Start time';
 $string['statistics'] = 'Statistics';
@@ -270,6 +273,7 @@ $string['studentmultiselect'] = 'Each student can be selected only once in this 
 $string['studentnotes'] = 'Your notes about the appointment ';
 $string['students'] = 'Students';
 $string['sunday'] = 'Sunday';
+$string['switchform'] = 'Switch Slot Add Mode';
 $string['tab-thisappointment'] = 'This appointment';
 $string['tab-otherappointments'] = 'All appointments of this student';
 $string['tab-otherstudents'] = 'Students in this slot';
@@ -330,6 +334,11 @@ $string['choosingslotstart_help']='Change (or choose) the appointment start time
 if this slot replaces all conflicting appointments. Note that the new slot parameters will override all previous
 settings.';
 
+
+$string['divide_help'] = 'Divide the scheduler into slots.';
+
+$string['enddate_help'] = 'The last date that slots will be added to.';
+
 $string['exclusivity_help']='<p>You can set a limit on the amount of students that can apply for a given slot. </p>
 <p>Setting a limit of 1 (default) will toggle the slot in exclusive mode.</p>
 <p>If the slot is set to unlimited number (0), this slot will never be considered in constraints evaluation, even if other slots are exclusive or limited in the same time range.
@@ -369,7 +378,7 @@ $string['staffrolename_help']='
 <p>If for this scheduler students are going to be meeting with various TAs, then "TA" should be entered here. 
 If students will be meeting with Igor the Electrician, "Electrician" should be enetered here.</p>';
 
-$string['switchform'] = 'Switch Slot Add Mode';
+$string['startdate_help'] = 'The first date that slots will be added to.';
 
 $string['visible_help'] = '<p>This determines the visibility of the Scheduler.</p>
 <ul><li><strong><em>Visible:</em></strong> Students can see the Scheduler.</li>

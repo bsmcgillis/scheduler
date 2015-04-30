@@ -312,21 +312,25 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         // $mform->addElement('header', 'appointhead', get_string('addsession', 'scheduler'));
         
         // Start and end of range
-        $mform->addElement('date_selector', 'rangestart', get_string('date', 'scheduler'));
+        $mform->addElement('date_selector', 'rangestart', get_string('startdate', 'scheduler'));
         $mform->setDefault('rangestart', time());
+        $mform->addHelpButton('rangestart', 'startdate', 'scheduler');
 
         $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
                             array('optional'  => true) );
+        $mform->addHelpButton('rangeend', 'enddate', 'scheduler');
+
 
         // Weekdays selection
+        $mform->addElement('html', '<div class="fitem"><div class="fitemtitle"> </div><div class="felement"><strong><em>'.get_string('addondays', 'scheduler').'</em></strong></div></div>');
         $weekdays = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday');
         foreach ($weekdays as $day) {
-            $label = ($day == 'monday') ? get_string('addondays', 'scheduler') : '';
-            $mform->addElement('advcheckbox', $day, $label, get_string($day, 'scheduler'));
+            $mform->addElement('advcheckbox', $day, '', get_string($day, 'scheduler'));
             $mform->setDefault($day, true);
         }
         $mform->addElement('advcheckbox', 'saturday', '', get_string('saturday', 'scheduler'));
         $mform->addElement('advcheckbox', 'sunday', '', get_string('sunday', 'scheduler'));
+
 
         // Start and end time
         $hours = array();
@@ -341,6 +345,7 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         $starttimegroup[] = $mform->createElement('select', 'starthour', get_string('hour', 'form'), $hours);
         $starttimegroup[] = $mform->createElement('select', 'startminute', get_string('minute', 'form'), $minutes);
         $mform->addGroup ($starttimegroup, 'starttime', get_string('starttime', 'scheduler'), null, false);
+
         $endtimegroup = array();
         $endtimegroup[] = $mform->createElement('select', 'endhour', get_string('hour', 'form'), $hours);
         $endtimegroup[] = $mform->createElement('select', 'endminute', get_string('minute', 'form'), $minutes);
@@ -349,6 +354,7 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         // Divide into slots?
         $mform->addElement('selectyesno', 'divide', get_string('divide', 'scheduler'));
         $mform->setDefault('divide', 1);
+        $mform->addHelpButton('divide', 'divide', 'scheduler');
 
         // Duration of the slot
         $this->add_duration_field('minutesperslot');
