@@ -313,18 +313,23 @@ class scheduler_addsession_form extends scheduler_slotform_base {
 
         $mform = $this->_form;
         
-        // TODO: delete the below
-        // // Add a header to make it hidable
-        // $mform->addElement('header', 'appointhead', get_string('addsession', 'scheduler'));
         
         // Start and end of range
         $mform->addElement('date_selector', 'rangestart', get_string('startdate', 'scheduler'));
         $mform->setDefault('rangestart', time());
         $mform->addHelpButton('rangestart', 'startdate', 'scheduler');
 
-        $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
-                            array('optional'  => false), array('onclick' => 'toggleRepeat()'));
 
+        // Checkbox and label that specify whether the slot will span days or not
+        $mform->addElement('advcheckbox', 'spandays', get_string('spandays', 'scheduler'), '', array('group' => 1, 'onclick' => 'toggleRepeat()'));
+
+        // Enclose all dayspan in a div that will be hidden together
+        $mform->addElement('html', '<div class="spandays" hidden=true>');
+        $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
+                            array('optional'  => false));
+
+        
+        // Help button for datepicker
         $mform->addHelpButton('rangeend', 'enddate', 'scheduler');
 
 
@@ -339,22 +344,26 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         $mform->addElement('advcheckbox', 'saturday', '', get_string('saturday', 'scheduler'));
         $mform->addElement('advcheckbox', 'sunday', '', get_string('sunday', 'scheduler'));
 
+        
+        // End hidable spandays class
+        $mform->addElement('html', '</div>');
+
 
         // Start and end time
         $hours = array();
         $minutes = array();
         for ($i=0; $i<=23; $i++) {
             if($i == 0){
-                $hours[$i] = sprintf("%02d", 12) . " am";
+                $hours[$i] = sprintf("%d", 12) . " am";
             }
             elseif($i < 12){
-                $hours[$i] = sprintf("%02d", $i) . " am";
+                $hours[$i] = sprintf("%d", $i) . " am";
             }
             elseif($i == 12){
-                $hours[$i] = sprintf("%02d", 12) . " pm";
+                $hours[$i] = sprintf("%d", 12) . " pm";
             }
             else{
-                $hours[$i] = sprintf("%02d", $i-12) . " pm";
+                $hours[$i] = sprintf("%d", $i-12) . " pm";
             }
         }
         for ($i=0; $i<60; $i+=5) {
