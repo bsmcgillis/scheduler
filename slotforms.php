@@ -125,11 +125,15 @@ class scheduler_editslot_form extends scheduler_slotform_base {
         }
 
         // Start date/time of the slot
-        $mform->addElement('date_time_selector', 'starttime', get_string('date', 'scheduler'));
+        $mform->addElement('date_time_selector', 'starttime', get_string('dateandtime', 'scheduler'));
         $mform->setDefault('starttime', time());
+        $mform->addHelpButton('starttime', 'dateandtime', 'scheduler');
+
 
         // Duration of the slot
         $this->add_duration_field();
+        $this->_form->addHelpButton('durationgroup', 'duration', 'scheduler');
+
 
         // Ignore conflict checkbox
         $mform->addElement('checkbox', 'ignoreconflicts', get_string('ignoreconflicts', 'scheduler'));
@@ -366,9 +370,12 @@ class scheduler_addsession_form extends scheduler_slotform_base {
 
         // Duration of the slot
         $this->add_duration_field('minutesperslot');
+        $this->_form->addHelpButton('durationgroup', 'duration', 'scheduler');
+
 
         // Break between slots
         $this->add_minutes_field('break', 'break', 0, 'minutes');
+        $mform->addHelpButton('breakgroup', 'break', 'scheduler');
 
         // Force when overlap?
         $mform->addElement('selectyesno', 'forcewhenoverlap', get_string('forcewhenoverlap', 'scheduler'));
