@@ -1,5 +1,7 @@
 <?php
 
+$string['test'] = 'this is a test';
+
 $string['pluginname'] = 'Scheduler';
 $string['pluginadministration'] = 'Scheduler administration';
 $string['modulename'] = 'Scheduler';
@@ -38,7 +40,7 @@ $string['action'] = 'Action';
 $string['actions'] = 'Actions';
 $string['addappointment'] = 'Add another student';
 $string['addcommands'] = 'Add slots';
-$string['addondays'] = 'Add appointments on';
+$string['addondays'] = 'Add slots every:';
 $string['addscheduled'] = 'Add scheduled student';
 $string['addsession'] = 'Add repeated slots';
 $string['addsingleslot'] = 'Add single slot';
@@ -107,9 +109,10 @@ $string['deletetheseslots'] = 'Delete these slots';
 $string['deleteunusedslots'] = 'Delete my unused slots';
 $string['department'] = 'From where?';
 $string['disengage'] = 'Drop my appointments';
-$string['displayfrom'] = 'Display appointment to students from';
+$string['displayfrom'] = 'Display slots';
+$string['displayon'] = 'Display slot';
 $string['distributetoslot'] = 'Distribute to the whole group';
-$string['divide'] = 'Divide into slots?';
+$string['divide'] = 'Divide into slots';
 $string['dontforgetsaveadvice'] = 'You have changed the list of appointed people. Don\'t forget saving this form to commit the changes definitively.';
 $string['downloadexcel'] = 'Exports to Excel';
 $string['downloads'] = 'Exports';
@@ -118,7 +121,7 @@ $string['durationrange'] = 'Slot duration must be between {$a->min} and {$a->max
 $string['emailreminder'] = 'Email a reminder';
 $string['emailreminderondate'] = 'Email a reminder on';
 $string['end'] = 'End';
-$string['enddate'] = 'Repeat time slots until';
+$string['enddate'] = 'Repeat until';
 $string['endtime'] = 'End time';
 $string['exclusive'] = 'Exclusive';
 $string['exclusivity'] = 'Exclusivity';
@@ -181,7 +184,7 @@ $string['modeoneatatime'] = 'at a time';
 $string['monday'] = 'Monday';
 $string['move'] = 'Change';
 $string['moveslot'] = 'Move slot';
-$string['multiplestudents'] = 'Allow multiple students per slot?';
+$string['multiplestudents'] = 'Students per slot';
 $string['myappointments'] = 'My appointments';
 $string['name'] = 'Scheduler name';
 $string['needteachers'] = 'Slots cannot be added as this course has no teachers';
@@ -253,6 +256,7 @@ $string['staffbreakdown'] = 'By {$a}';
 $string['staffmember'] = 'Member of Staff';
 $string['staffrolename'] = 'Role of Meeting Conductor';
 $string['start'] = 'Start';
+$string['startdate'] = 'Start Date';
 $string['startpast'] = 'You can\'t start an empty appointment slot in the past';
 $string['starttime'] = 'Start time';
 $string['statistics'] = 'Statistics';
@@ -270,6 +274,7 @@ $string['studentmultiselect'] = 'Each student can be selected only once in this 
 $string['studentnotes'] = 'Your notes about the appointment ';
 $string['students'] = 'Students';
 $string['sunday'] = 'Sunday';
+$string['switchform'] = 'Switch Slot Add Mode';
 $string['tab-thisappointment'] = 'This appointment';
 $string['tab-otherappointments'] = 'All appointments of this student';
 $string['tab-otherstudents'] = 'Students in this slot';
@@ -324,16 +329,39 @@ However the student is limited to having up to <strong><em>the selected number</
 
 $string['appointagroup_help'] = 'Choose whether you want to make the appointment only for yourself, or for an entire group.';
 
-$string['bookwithteacher_help']='Choose a teacher for the appointment.';
+$string['bookwithteacher_help']='Choose the specific individual who will be meeting with the students for the time slot(s).';
 
 $string['choosingslotstart_help']='Change (or choose) the appointment start time. If this appointment collides with some other slots, you\'ll be asked
 if this slot replaces all conflicting appointments. Note that the new slot parameters will override all previous
 settings.';
 
-$string['exclusivity_help']='<p>You can set a limit on the amount of students that can apply for a given slot. </p>
-<p>Setting a limit of 1 (default) will toggle the slot in exclusive mode.</p>
-<p>If the slot is set to unlimited number (0), this slot will never be considered in constraints evaluation, even if other slots are exclusive or limited in the same time range.
-</p>';
+$string['comments_help'] = 'Any additional information or comments about this slot';
+
+$string['displayfrom_help'] = '
+<p>Specificy when slots will become visible to students</p>
+<p><ul><li><strong><em>Now:</em></strong> All slots will immediately be visible to students</li>
+<li><strong><em>*** before slot:</em></strong> The slot will only become visible the selected amount of time before the slot\'s scheduled time.
+Slots will become visibile to students on a rolling basis.</li></p>';
+
+$string['displayon_help'] = 'The date that this slot will become visible to students';
+
+$string['divide_help'] = 'Divide the scheduler into slots.';
+
+$string['enddate_help'] = 'The last date that slots will be added to.';
+
+$string['endtime_help'] = 'The end time of the last slot that will be added';
+
+$string['emailreminder_help'] = '
+<p>Select when to send a reminder email to the student that signs up for any slot.</p>
+<p>If NEVER is selected, no reminder email will be sent</p>';
+
+$string['exclusivity_help']='
+<p>This sets a limit on the number of students that can sign up for a single slot.</p>
+
+<p>Setting a limit of 1 <em>(default)</em> is equivalent to the slot being in exclusive mode.</p>
+
+<p>Setting a limit of UNLIMITED will allow unlimited students to sign up for a single slot, 
+even if other slots are exclusive or limited during the same time range.</p>';
 
 $string['forcewhenoverlap_help']='
 <h3>Forcing slot creation when slots overlap</h3>
@@ -354,7 +382,7 @@ $string['introduction_help']= '
 <p>The description will often include any instructions or requirements for the meetings. It can also include any clarification 
 that the instructor wants to give regarding the content or format of the meetings.</p>';
 
-$string['location_help']='Specify the scheduled location of the meeting.';
+$string['location_help']='The location of the meeting.';
 
 $string['name_help'] = 'Name of the scheduler. This is the name that users will see as the title of the scheduler.';
 
@@ -369,7 +397,9 @@ $string['staffrolename_help']='
 <p>If for this scheduler students are going to be meeting with various TAs, then "TA" should be entered here. 
 If students will be meeting with Igor the Electrician, "Electrician" should be enetered here.</p>';
 
-$string['switchform'] = 'Switch Slot Add Mode';
+$string['startdate_help'] = 'The first date that slots will be added to.';
+
+$string['starttime_help'] = 'The start time of the first slot to be added';
 
 $string['visible_help'] = '<p>This determines the visibility of the Scheduler.</p>
 <ul><li><strong><em>Visible:</em></strong> Students can see the Scheduler.</li>
