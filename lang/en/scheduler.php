@@ -252,6 +252,7 @@ $string['slotsadded'] = '{$a} slots have been added';
 $string['slottype'] = 'Slot type';
 $string['slotupdated'] = '1 slot updated';
 $string['slotwarning'] = '<strong>Warning: </strong>Moving this slot to the selected time conflicts with the slot(s) listed below. Tick "Ignore scheduling conflicts" if you want to move the slot nevertheless.';
+$string['spandays'] = 'Span multiple days';
 $string['staffbreakdown'] = 'By {$a}';
 $string['staffmember'] = 'Member of Staff';
 $string['staffrolename'] = 'Role of Meeting Conductor';

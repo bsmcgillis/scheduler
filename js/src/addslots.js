@@ -1,6 +1,5 @@
 $(document).ready(function(){
-
-	
+	toggleRepeat();
 })
 
 
@@ -12,5 +11,5 @@ function toggleForm () {
 }
 
 function toggleRepeat() {
-	$('.repeatDates').slideToggle();
+	$('.spandays').toggle();
 }
