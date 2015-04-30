@@ -150,54 +150,60 @@ if ($action != 'view') {
 /**************************************** Add slots or session form ****************************************/
 if($action == 'addslot' || $action == 'addsession'){
 
+
+    $PAGE->requires->js(new moodle_url('/mod/scheduler/js/src/addslots.js'));
+
     $actionurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'addslot',    'id' => $cm->id, 'subpage' => $subpage));
     $returnurl = new moodle_url('/mod/scheduler/view.php', array('what' => 'view', 'subpage' => $subpage, 'id' => $cm->id));
 
+
+    
 
     if (!scheduler_has_teachers($context)) {
         print_error('needteachers', 'scheduler', $returnurl);
     }
 
-    $mform = new scheduler_addsession_form($actionurl, $scheduler, $cm, $usergroups);
+    $mform_session = new scheduler_addsession_form($actionurl, $scheduler, $cm, $usergroups);
+    $mform_slot = new scheduler_editslot_form($actionurl, $scheduler, $cm, $usergroups);
 
 
 
-    if ($mform->is_cancelled()) {
+    if ($mform_session->is_cancelled() || $mform_slot->is_cancelled()) {
+
         redirect($returnurl);
-    } else if ($formdata = $mform->get_data()) {
-        scheduler_action_doaddsession($scheduler, $formdata);
-    } else {
-
-        echo "<a href='#' class='btn btn-default' onclick='toggleForm()'>".get_string('switchform', 'scheduler')."</a>"; 
-        // Place repeated slot form and heading inside a div
-        echo "<div id='repeated_slot' class='slotForm'>";
-
-        echo $output->heading(get_string('addsession', 'scheduler'));
-        $mform->display();
-
-        echo "</div>";
     }
+    else if ($formdata = $mform_session->get_data()) {
 
-    $mform = new scheduler_editslot_form($actionurl, $scheduler, $cm, $usergroups);
+        scheduler_action_doaddsession($scheduler, $formdata);
 
-    if ($mform->is_cancelled()) {
-        redirect($returnurl);
-    } else if ($formdata = $mform->get_data()) {
+    }
+    else if ($formdata = $mform_slot->get_data()) {
+
         scheduler_save_slotform ($scheduler, $course, 0, $formdata);
         echo $output->action_message(get_string('oneslotadded', 'scheduler'));
-    } else {
+
+    }
+    else {
+
+        // Button to toggle both 
+        echo "<a href='#' class='btn btn-default' onclick='toggleForm()'>".get_string('switchform', 'scheduler')."</a>"; 
+
+        // Place repeated slot form and heading inside a div
+        echo "<div id='repeated_slot' class='slotForm'>";
+        echo $output->heading(get_string('addsession', 'scheduler'));
+        $mform_session->display();
+        echo "</div>";
+
+
         // Place single slot form and heading inside a div
         echo "<div id='single_slot' class='slotForm' hidden>";
-
         echo $output->heading(get_string('addsingleslot', 'scheduler'));
-        $mform->display();
-        
+        $mform_slot->display();
         echo "</div>";
-    }
 
-    $PAGE->requires->js(new moodle_url('/mod/scheduler/js/src/addslots.js'));
-    echo $output->footer($course);
-    die;
+        echo $output->footer($course);
+        die;
+    }
 
 }
 
@@ -340,7 +346,6 @@ if ($action == 'schedulegroup') {
     return -1;
 }
 //****************** Standard view ***********************************************//
-
 // Clean all late slots (for everybody).
 $scheduler->free_late_unused_slots();
 

@@ -316,7 +316,7 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         $mform->setDefault('rangestart', time());
 
         $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
-                            array('optional'  => true) );
+                            array('optional'  => false), array('onclick' => 'toggleRepeat()'));
 
         // Weekdays selection
         $weekdays = array('monday', 'tuesday', 'wednesday', 'thursday', 'friday');
