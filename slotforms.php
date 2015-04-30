@@ -457,6 +457,16 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         if ($data['rangestart'] < time() - DAYSECS) {
             $errors['rangestart'] = get_string('startpast', 'scheduler');
         }
+		
+		if($data['starttime'] < time () - DAYSECS)
+		{
+			$errors['starttime'] = get_string('starttimeinpast', 'scheduler')
+		}
+		
+		if($data['rangeend'] < time() - DAYSECS)
+		{
+			$errors['endtime'] = get_string('endtimeinpast', 'scheduler');
+		}
 
         // Break must be nonnegative
         if ($data['break'] < 0) {
