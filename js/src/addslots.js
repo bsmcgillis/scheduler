@@ -1,4 +1,5 @@
 $(document).ready(function(){
+	$("#id_spandays").attr('value', 0)
 	toggleRepeat();
 })
 

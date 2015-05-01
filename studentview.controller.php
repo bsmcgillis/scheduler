@@ -157,14 +157,10 @@ if ($action == 'savechoice') {
 
     foreach ($slotidstoadd as $slotid) {
         $newslot = $scheduler->get_slot($slotid);
-
-        // TODO: Delete the below
-        
-        echo "<table><tr><th>Teacher</th><th>Student</th></tr>";
+       
 
         // Create new appointment and add it for each member of the group.
         foreach ($oldslotowners as $astudentid) {
-            echo "<h1>Student ID: ".$astudentid."</h1>";
             $appointment = $newslot->create_appointment();
             $appointment->studentid = $astudentid;
             $appointment->attended = 0;
@@ -178,21 +174,13 @@ if ($action == 'savechoice') {
             if ($scheduler->allownotifications) {
                 $student = $DB->get_record('user', array('id' => $appointment->studentid));
                 $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
-                $vars = scheduler_get_mail_variables($scheduler, $newslot, $teacher, $student, $course, $teacher);
-                
-                echo "<tr><td>";
-                print_r($teacher);
-                echo "</td><td>";
-                print_r($student);
-                echo "</td></tr>";
+                $vars = scheduler_get_mail_variables($scheduler, $newslot, $teacher, $student, $course, $teacher);                
                 
                 
-                
-                // scheduler_send_email_from_template($teacher, $student, $course, 'newappointment', 'applied', $vars, 'scheduler');
-                // scheduler_send_email_from_template($student, $teacher, $course, 'newappointment', 'applied', $vars, 'scheduler');
+                scheduler_send_email_from_template($teacher, $student, $course, 'newappointment', 'applied', $vars, 'scheduler');
+                scheduler_send_email_from_template($student, $teacher, $course, 'newappointment', 'applied', $vars, 'scheduler');
             }
         }
-        echo "</table>";
         $newslot->save();
     }
 }
