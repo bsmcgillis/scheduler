@@ -125,9 +125,41 @@ class scheduler_editslot_form extends scheduler_slotform_base {
         }
 
         // Start date/time of the slot
-        $mform->addElement('date_time_selector', 'starttime', get_string('dateandtime', 'scheduler'));
+        // $mform->addElement('date_time_selector', 'starttime', get_string('dateandtime', 'scheduler'));
+        // $mform->setDefault('starttime', time());
+        // $mform->addHelpButton('starttime', 'dateandtime', 'scheduler');
+
+        // Start and end of range
+        $mform->addElement('date_selector', 'starttime', get_string('startdate', 'scheduler'));
         $mform->setDefault('starttime', time());
-        $mform->addHelpButton('starttime', 'dateandtime', 'scheduler');
+        $mform->addHelpButton('starttime', 'startdate', 'scheduler');
+
+        // // Start and end time
+        $hours = array();
+        $minutes = array();
+        for ($i=0; $i<=23; $i++) {
+            if($i == 0){
+                $hours[$i] = sprintf("%d", 12) . " am";
+            }
+            elseif($i < 12){
+                $hours[$i] = sprintf("%d", $i) . " am";
+            }
+            elseif($i == 12){
+                $hours[$i] = sprintf("%d", 12) . " pm";
+            }
+            else{
+                $hours[$i] = sprintf("%d", $i-12) . " pm";
+            }
+        }
+        for ($i=0; $i<60; $i+=5) {
+            $minutes[$i] = sprintf("%02d", $i);
+        }
+        $starttimegroup = array();
+        $starttimegroup[] = $mform->createElement('select', 'starthoursingle', get_string('hour', 'form'), $hours);
+        $starttimegroup[] = $mform->createElement('select', 'startminutesingle', get_string('minute', 'form'), $minutes);
+        $mform->addGroup($starttimegroup, 'starttimesingle', get_string('starttime', 'scheduler'), null, false);
+        $mform->addHelpButton('starttimesingle', 'starttime', 'scheduler');
+
 
 
         // Duration of the slot
