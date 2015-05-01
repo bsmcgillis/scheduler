@@ -345,18 +345,23 @@ class scheduler_addsession_form extends scheduler_slotform_base {
 
         $mform = $this->_form;
         
-        // TODO: delete the below
-        // // Add a header to make it hidable
-        // $mform->addElement('header', 'appointhead', get_string('addsession', 'scheduler'));
         
         // Start and end of range
         $mform->addElement('date_selector', 'rangestart', get_string('startdate', 'scheduler'));
         $mform->setDefault('rangestart', time());
         $mform->addHelpButton('rangestart', 'startdate', 'scheduler');
 
-        $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
-                            array('optional'  => false), array('onclick' => 'toggleRepeat()'));
 
+        // Checkbox and label that specify whether the slot will span days or not
+        $mform->addElement('advcheckbox', 'spandays', get_string('spandays', 'scheduler'), '', array('group' => 1, 'onclick' => 'toggleRepeat()'));
+
+        // Enclose all dayspan in a div that will be hidden together
+        $mform->addElement('html', '<div class="spandays" hidden=true>');
+        $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
+                            array('optional'  => false));
+
+        
+        // Help button for datepicker
         $mform->addHelpButton('rangeend', 'enddate', 'scheduler');
 
 
@@ -371,22 +376,26 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         $mform->addElement('advcheckbox', 'saturday', '', get_string('saturday', 'scheduler'));
         $mform->addElement('advcheckbox', 'sunday', '', get_string('sunday', 'scheduler'));
 
+        
+        // End hidable spandays class
+        $mform->addElement('html', '</div>');
+
 
         // Start and end time
         $hours = array();
         $minutes = array();
         for ($i=0; $i<=23; $i++) {
             if($i == 0){
-                $hours[$i] = sprintf("%02d", 12) . " am";
+                $hours[$i] = sprintf("%d", 12) . " am";
             }
             elseif($i < 12){
-                $hours[$i] = sprintf("%02d", $i) . " am";
+                $hours[$i] = sprintf("%d", $i) . " am";
             }
             elseif($i == 12){
-                $hours[$i] = sprintf("%02d", 12) . " pm";
+                $hours[$i] = sprintf("%d", 12) . " pm";
             }
             else{
-                $hours[$i] = sprintf("%02d", $i-12) . " pm";
+                $hours[$i] = sprintf("%d", $i-12) . " pm";
             }
         }
         for ($i=0; $i<60; $i+=5) {
@@ -504,37 +513,56 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         if ($data['break'] < 0) {
             $errors['breakgroup'] = get_string('breaknotnegative', 'scheduler');
         }
-		
 
-		//works for checking current day of appointment
-/* 		$fordays = 0;
-		if ($data['rangeend'] > 0){
-			$fordays = ($data['rangeend'] - $data['rangestart']) / DAYSECS;
-		}
-		$countslots = 0;
-		$couldnotcreateslots = '';
-		$startfrom = $data['rangestart']+($data['starthour']*60+$data['startminute'])*60;
-		$endat = $data['rangestart']+($data['endhour']*60+$data['endminute'])*60;
-		
-		for ($d = 0; $d <= $fordays; $d ++) {
-		$starttime = $startfrom + ($d * DAYSECS);
+        // TODO conflict checks
+
+        /*
+
+        /// make a base slot for generating
+        $slot = new stdClass();
+        $slot->appointmentlocation = $data->appointmentlocation;
+        $slot->exclusivity = $data->exclusivity;
+        $slot->duration = $data->duration;
+        $slot->schedulerid = $scheduler->id;
+        $slot->timemodified = time();
+        $slot->teacherid = $data->teacherid;
+
+        /// check if overlaps. Check also if some slots are in allowed day range
+        $startfrom = $data->rangestart;
+        $noslotsallowed = true;
+        for ($d = 0; $d <= $fordays; $d ++){
+        $starttime = $startfrom + ($d * DAYSECS);
         $eventdate = usergetdate($starttime);
-		var_dump($eventdate);
         $dayofweek = $eventdate['wday'];
-		var_dump($dayofweek);
-        if ((($dayofweek == 1) && ($data['monday'] == 1)) ||
-        (($dayofweek == 2) && ($data['tuesday'] == 1)) ||
-        (($dayofweek == 3) && ($data['wednesday'] == 1)) ||
-        (($dayofweek == 4) && ($data['thursday'] == 1)) ||
-        (($dayofweek == 5) && ($data['friday'] == 1)) ||
-        (($dayofweek == 6) && ($data['saturday'] == 1)) ||
-        (($dayofweek == 0) && ($data['sunday'] == 1))) {
-		echo "<script> alert($dayofweek); </script>;";
-		}
-		} */
+        if ((($dayofweek == 1) && ($data->monday == 1)) ||
+                        (($dayofweek == 2) && ($data->tuesday == 1)) ||
+                        (($dayofweek == 3) && ($data->wednesday == 1)) ||
+                        (($dayofweek == 4) && ($data->thursday == 1)) ||
+                        (($dayofweek == 5) && ($data->friday == 1)) ||
+                        (($dayofweek == 6) && ($data->saturday == 1)) ||
+                        (($dayofweek == 0) && ($data->sunday == 1))){
+                        $noslotsallowed = false;
+                        $data->starttime = make_timestamp($eventdate['year'], $eventdate['mon'], $eventdate['mday'], $data->starthour, $data->startminute);
+                        $conflicts = scheduler_get_conflicts($scheduler->id, $data->starttime, $data->starttime + $data->duration * 60, $data->teacherid, 0, SCHEDULER_ALL, false);
+                        if (!$data->forcewhenoverlap){
+                        if ($conflicts){
+                        unset($erroritem);
+                        $erroritem->message = get_string('overlappings', 'scheduler');
+                        $erroritem->on = 'range';
+                        $errors[] = $erroritem;
+                        }
+                        }
+                        }
+                        }
 
-
-        
+                        /// Finally check if some slots are allowed (an error is thrown to ask care to this situation)
+                        if ($noslotsallowed){
+                        unset($erroritem);
+                        $erroritem->message = get_string('allslotsincloseddays', 'scheduler');
+                        $erroritem->on = 'days';
+                        $errors[] = $erroritem;
+                        }
+         */
 
         return $errors;
     }

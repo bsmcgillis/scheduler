@@ -37,6 +37,10 @@ if ($action == 'savechoice') {
 
     $appointgroup = optional_param('appointgroup', 0, PARAM_INT);
 
+    // echo "<h2>BEGIN ";
+    // print_r(groups_get_members);
+    // echo " END</h2>";
+
     $requiredcapacity = 1;
     if ($appointgroup) {
         $groupmembers = groups_get_members($appointgroup);
@@ -108,6 +112,8 @@ if ($action == 'savechoice') {
     $oldslotownerlist = implode("','", $oldslotowners);
 
     if ($oldslotowners) {
+
+
         // Cleans up old slots if not attended and within rebookable time limits
         $sql = 'SELECT a.id as appointmentid, s.* '.
                         'FROM {scheduler_slots} AS s, {scheduler_appointment} AS a '.
@@ -143,7 +149,7 @@ if ($action == 'savechoice') {
 
                 // Notify the teacher.
                 if ($scheduler->allownotifications) {
-                    scheduler_send_email_from_template($teacher, $student, $course, 'cancelledbystudent', 'cancelled', $vars, 'scheduler');
+                    // scheduler_send_email_from_template($teacher, $student, $course, 'cancelledbystudent', 'cancelled', $vars, 'scheduler');
                 }
             }
         }
@@ -152,8 +158,13 @@ if ($action == 'savechoice') {
     foreach ($slotidstoadd as $slotid) {
         $newslot = $scheduler->get_slot($slotid);
 
+        // TODO: Delete the below
+        
+        echo "<table><tr><th>Teacher</th><th>Student</th></tr>";
+
         // Create new appointment and add it for each member of the group.
         foreach ($oldslotowners as $astudentid) {
+            echo "<h1>Student ID: ".$astudentid."</h1>";
             $appointment = $newslot->create_appointment();
             $appointment->studentid = $astudentid;
             $appointment->attended = 0;
@@ -168,9 +179,20 @@ if ($action == 'savechoice') {
                 $student = $DB->get_record('user', array('id' => $appointment->studentid));
                 $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
                 $vars = scheduler_get_mail_variables($scheduler, $newslot, $teacher, $student, $course, $teacher);
-                scheduler_send_email_from_template($teacher, $student, $course, 'newappointment', 'applied', $vars, 'scheduler');
+                
+                echo "<tr><td>";
+                print_r($teacher);
+                echo "</td><td>";
+                print_r($student);
+                echo "</td></tr>";
+                
+                
+                
+                // scheduler_send_email_from_template($teacher, $student, $course, 'newappointment', 'applied', $vars, 'scheduler');
+                // scheduler_send_email_from_template($student, $teacher, $course, 'newappointment', 'applied', $vars, 'scheduler');
             }
         }
+        echo "</table>";
         $newslot->save();
     }
 }
@@ -197,7 +219,7 @@ if ($action == 'disengage') {
                 $student = $DB->get_record('user', array('id' => $USER->id));
                 $teacher = $DB->get_record('user', array('id' => $oldslot->teacherid));
                 $vars = scheduler_get_mail_variables($scheduler, $oldslot, $teacher, $student, $course, $teacher);
-                scheduler_send_email_from_template($teacher, $student, $COURSE, 'cancelledbystudent', 'cancelled', $vars, 'scheduler');
+                // scheduler_send_email_from_template($teacher, $student, $COURSE, 'cancelledbystudent', 'cancelled', $vars, 'scheduler');
             }
         }
     }
