@@ -430,12 +430,15 @@ class mod_scheduler_renderer extends plugin_renderer_base {
             if ($booker->style == 'multi') {
                 $inputname = "slotcheck[{$slot->slotid}]";
                 $inputelm = html_writer::checkbox($inputname, $slot->slotid, $slot->bookedbyme, '', array('class' => 'slotbox'));
-            } else {
+            } else {                
                 $inputparms = array('type' => 'radio', 'name' => 'slotid', 'value' => $slot->slotid, 
-                  'onclick' => 'if(document.getElementsByClassName("shown").length > 0)  
-                  {document.getElementsByClassName("shown")[0].className = "hidden"}; 
-                   document.getElementById("save'.$index.'").parentElement.parentElement.className = "shown";
-                   document.getElementById("save'.$index.'").parentElement.colSpan = "7"');
+                'onclick' => 'if(document.getElementsByClassName("shown").length > 0) 
+                {document.getElementsByClassName("shown")[0].className = "hidden"}
+                else{document.getElementById("saveButton").className = "shown"}; 
+                document.getElementById("save'.$index.'").parentElement.parentElement.className = "shown";
+                document.getElementById("save'.$index.'").parentElement.colSpan = "7";
+                var parent = document.getElementById("save'.$index.'").parentNode;
+                parent.appendChild(document.getElementById("saveButton"))');
 
 
                 if ($slot->bookedbyme) {
@@ -525,7 +528,7 @@ class mod_scheduler_renderer extends plugin_renderer_base {
             $blankRowData[] = "";
             $blankRowData[] = "";
             $blankRowData[] = "";
-            $blankRowData[] = html_writer::div($controls, 'bookercontrols', array('id' => 'save'.$index++));
+            $blankRowData[] = html_writer::empty_tag('emptyRows', array('id' => 'save'.$index++));
 
             $table->data[] = $blankRowData;
             $table->rowclasses[] = "hidden";
@@ -562,6 +565,8 @@ class mod_scheduler_renderer extends plugin_renderer_base {
 		}
         
         $o .= html_writer::table($table);
+
+        $o .= html_writer::div($controls, 'bookercontrols hidden', array('id' => 'saveButton'));
 
         $o .= html_writer::end_tag('form');
 

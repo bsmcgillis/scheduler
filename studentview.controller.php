@@ -37,9 +37,9 @@ if ($action == 'savechoice') {
 
     $appointgroup = optional_param('appointgroup', 0, PARAM_INT);
 
-    // echo "<h2>BEGIN ";
-    // print_r(groups_get_members);
-    // echo " END</h2>";
+    echo "<h2>BEGIN ";
+    print_r(count(groups_get_members($appointgroup)));
+    echo " END</h2>";
 
     $requiredcapacity = 1;
     if ($appointgroup) {
