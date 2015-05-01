@@ -1,7 +1,5 @@
 <?php
 
-$string['test'] = 'this is a test';
-
 $string['pluginname'] = 'Scheduler';
 $string['pluginadministration'] = 'Scheduler administration';
 $string['modulename'] = 'Scheduler';
@@ -15,7 +13,7 @@ $string['modulename_link'] = 'mod/scheduler/view';
 $string['modulenameplural'] = 'Schedulers';
 
 /* ***** Capabilities ****** */
-$string['scheduler:addinstance'] = 'Añadir un nuevo planificador';
+$string['scheduler:addinstance'] = 'Add a new scheduler';
 $string['scheduler:appoint'] = 'Appoint';
 $string['scheduler:attend'] = 'Attend students';
 $string['scheduler:canscheduletootherteachers'] = 'Schedule appointments for other staff members';
@@ -125,7 +123,7 @@ $string['emailreminderondate'] = 'Email a reminder on';
 $string['end'] = 'End';
 $string['enddate'] = 'Repeat until';
 $string['endtime'] = 'End time';
-$string['endtimeinpast'] = 'You scheduled appointment times in the past, please review';
+$string['endtimeinpast'] = 'You scheduled appointment end time is in the past. Please review and select a valid end time.';
 $string['exclusive'] = 'Exclusive';
 $string['exclusivity'] = 'Exclusivity';
 $string['exclusivitylockedto'] = 'You cannot change the slot mode when scheduling. The current limit of the destination slot will apply. If the slot is new, a default limit of 1 will apply.';
@@ -191,7 +189,7 @@ $string['multiplestudents'] = 'Students per slot';
 $string['myappointments'] = 'My appointments';
 $string['name'] = 'Scheduler name';
 $string['needteachers'] = 'Slots cannot be added as this course has no teachers';
-$string['negativerange'] = 'Range is negative. This can\'t be.';
+$string['negativerange'] = 'The selected time range negative. The end date and time must be after the beginning date and time.';
 $string['never'] = 'Never';
 $string['newappointment'] = '{$a} : New appointment';
 $string['noappointments'] = 'No appointments';
@@ -261,9 +259,9 @@ $string['staffmember'] = 'Member of Staff';
 $string['staffrolename'] = 'Role of Meeting Conductor';
 $string['start'] = 'Start';
 $string['startdate'] = 'Start Date';
-$string['startpast'] = 'You can\'t start an empty appointment slot in the past';
+$string['startpast'] = 'The selected start date is in the past, please review';
 $string['starttime'] = 'Start time';
-$string['starttimeinpast'] = 'Your desired start time is in the past, please review';
+$string['starttimeinpast'] = 'The selected start time is in the past, please review';
 $string['statistics'] = 'Statistics';
 $string['strdownloadcsvgrades'] = 'CSV Export of grades';
 $string['strdownloadcsvslots'] = 'CSV Export of slots';
