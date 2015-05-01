@@ -398,6 +398,8 @@ $string['scale_help'] = '
 <p>Select if the meetings will be graded.</p>
 <p>If meetings will be graded, instructors can select the grading scale that will be used.</p>';
 
+$string['spandays_help'] = 'When checked this lets you chose a range of days to repeat slots.';
+
 $string['staffrolename_help']='
 <p>The title/category of the person that students will be meeting with.</p>
 <p>If for this scheduler students are going to be meeting with various TAs, then "TA" should be entered here. 
