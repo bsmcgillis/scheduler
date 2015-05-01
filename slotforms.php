@@ -497,17 +497,21 @@ class scheduler_addsession_form extends scheduler_slotform_base {
             $errors['endtime'] = get_string('negativerange', 'scheduler');
         }
 
-        // First slot is in the past
-        if ($data['rangestart'] < time() - DAYSECS) {
+        // checks that date chosen is not in the past
+        // if( [time of range start] < [time at beginning of today])
+        if ($data['rangestart'] < ( ( (int) (time() / DAYSECS) ) * DAYSECS) ) {
             $errors['rangestart'] = get_string('startpast', 'scheduler');
         }
 
+
         // check that the start time is not in the past.
-		if( ($starttime * 60) < (time() % DAYSECS) )
+        // if( [start time] < [time right now] )
+		if( ( ($starttime * 60) + $data['rangestart']) < time())
 		{
 			$errors['starttime'] = get_string('starttimeinpast', 'scheduler');
 		}
 
+print_r("errors: ".$errors['starttime']);
 
         // Break must be nonnegative
         if ($data['break'] < 0) {
