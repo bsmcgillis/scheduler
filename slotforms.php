@@ -490,6 +490,8 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         // Time range is negative
         $starttime = $data['starthour']*60+$data['startminute'];
         $endtime = $data['endhour']*60+$data['endminute'];
+
+        // check that the time range is not negative
         if ($starttime > $endtime)  {
             $errors['endtime'] = get_string('negativerange', 'scheduler');
         }
@@ -498,16 +500,13 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         if ($data['rangestart'] < time() - DAYSECS) {
             $errors['rangestart'] = get_string('startpast', 'scheduler');
         }
-		
-		if($data['rangestart'] <= time() && $starttime < time () - DAYSECS)
+
+        // check that the start time is not in the past.
+		if( ($starttime * 60) < (time() % DAYSECS) )
 		{
 			$errors['starttime'] = get_string('starttimeinpast', 'scheduler');
 		}
-		
-		if($data['rangestart'] <= time() && $endtime < time() - DAYSECS)
-		{
-			$errors['endtime'] = get_string('endtimeinpast', 'scheduler');
-		}
+
 
         // Break must be nonnegative
         if ($data['break'] < 0) {
