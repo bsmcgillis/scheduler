@@ -1,9 +1,17 @@
 $(document).ready(function(){
-	$("#id_spandays").attr('value', 0)
-	toggleRepeat();
+
+	// If there are no errors
+	if($(".error").length == 0){
+		// Hide the selectors
+		$("#id_spandays").prop('checked', false);
+		$('.spandays').hide();
+	}
+	else {
+		// Are errors, show the selectors
+		$("#id_spandays").prop('checked', true);
+		$('.spandays').show();
+	}
 })
-
-
 
 
 function toggleForm () {
