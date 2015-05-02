@@ -21,6 +21,10 @@ $(document).ready(function() {
     parentElement.children(':nth-child(8)').hide();        
 });
 
+$(document).ready(function() {
+    $("#id_modstandardelshdr").addClass("collapsed");
+});
+
 $('#id_modgrade_type').on('change', function() {
     
     //Get the selected value
