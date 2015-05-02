@@ -10,32 +10,37 @@ $(document).ready(function(){
 	// Change the label so that it is for the correct box 
 	$('label[for=id_spandays]').attr('for', 'id_rangeend_enabled')
 
-	// If there are no errors
-	if($(".error").length == 0){
-		// Hide the selectors and ensure checkbox is unchecked
+	// check for errors in span multiple days
+	if($(".spandays .error").length == 0){
+		// no errors, uncheck
 		$("#id_rangeend_enabled").prop('checked', false);
-		$('.spandays').hide();
 	}
 	else {
-	
-		// Are errors, check checkbox and show 
+		// are errors, check 
 		$("#id_rangeend_enabled").prop('checked', true);
-		$('.spandays').show();
 	}
+
+	// Update whether range is shown or not
+	spandaysToggle();
 })
 
 // Swaps which page is shown, repeated slot or single slot
 function toggleForm () {
-	$('#repeated_slot').slideToggle();
 	$('#single_slot').slideToggle();
+	$('#repeated_slot').slideToggle();
 }
 
 // Every time the enabled box is checked, toggle the view of the datepicker and days
 $('#id_rangeend_enabled').click(function () {
-	$('.spandays').toggle();
+	spandaysToggle();
 });
 
-// Toggle view of datepicker and days
+// Toggle view of datepicker and days based on the status of the checkbox
 function spandaysToggle () {
-	$('.spandays').toggle();
+	if($('#id_rangeend_enabled').prop('checked')) {
+		$('.spandays').slideDown(); // show
+	}
+	else {
+		$('.spandays').slideUp(); //hide
+	}
 }
