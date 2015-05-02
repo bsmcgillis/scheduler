@@ -22,6 +22,14 @@ $(document).ready(function(){
 
 	// Update whether range is shown or not
 	spandaysToggle();
+
+	// In the single slot side, if there are errors or there is more than one appointment
+	if($("#single_slot .error").length != 0 || $('#id_appointhead_1').length != 0){
+		// Show the slot
+		$('#single_slot').toggle();
+		$('#repeated_slot').toggle();
+	}
+
 })
 
 // Swaps which page is shown, repeated slot or single slot
@@ -35,7 +43,7 @@ $('#id_rangeend_enabled').click(function () {
 	spandaysToggle();
 });
 
-// Toggle view of datepicker and days based on the status of the checkbox
+// Toggle view of datepicker and days based on the status of the spandays checkbox
 function spandaysToggle () {
 	if($('#id_rangeend_enabled').prop('checked')) {
 		$('.spandays').slideDown(); // show
