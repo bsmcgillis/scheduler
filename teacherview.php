@@ -34,6 +34,20 @@ function scheduler_prepare_formdata(scheduler_slot $slot) {
 }
 
 function scheduler_save_slotform(scheduler_instance $scheduler, $course, $slotid, $data) {
+    $hours = $data->starthour;
+    $minutes = $data->startminute;
+
+    if($data->startampm == 1)
+        $hours += 12;
+    
+    
+    $hours = $hours * 60 * 60;
+    $minutes = $minutes * 60;
+
+    $data->starttime += $hours + $minutes;
+
+
+
 
     global $DB;
 
@@ -54,6 +68,8 @@ function scheduler_save_slotform(scheduler_instance $scheduler, $course, $slotid
     $slot->hideuntil = $data->hideuntil;
     $slot->emaildate = $data->emaildate;
     $slot->timemodified = time();
+
+    echo "<br/>Slot start time: " . $slot->starttime;
 
     $currentapps = $slot->get_appointments();
     $processedstuds = array();
