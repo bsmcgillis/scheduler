@@ -353,13 +353,13 @@ class scheduler_addsession_form extends scheduler_slotform_base {
 
 
         // Checkbox and label that specify whether the slot will span days or not
-        $mform->addElement('advcheckbox', 'spandays', get_string('spandays', 'scheduler'), '', array('group' => 1, 'onclick' => 'toggleRepeat()'));
+        $mform->addElement('checkbox', 'spandays', get_string('spandays', 'scheduler'), '', array('group' => 1, 'onclick' => 'spandaysToggle()'));
         $mform->addHelpButton('spandays', 'spandays', 'scheduler');
 
         // Enclose all dayspan in a div that will be hidden together
         $mform->addElement('html', '<div class="spandays" hidden=true>');
         $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
-                            array('optional'  => false));
+                            array('optional'  => true, 'startyear' => 2000));
 
         
         // Help button for datepicker
@@ -511,7 +511,6 @@ class scheduler_addsession_form extends scheduler_slotform_base {
 			$errors['starttime'] = get_string('starttimeinpast', 'scheduler');
 		}
 
-print_r("errors: ".$errors['starttime']);
 
         // Break must be nonnegative
         if ($data['break'] < 0) {
