@@ -130,35 +130,37 @@ class scheduler_editslot_form extends scheduler_slotform_base {
         // $mform->addHelpButton('starttime', 'dateandtime', 'scheduler');
 
         // Start and end of range
-        $mform->addElement('date_selector', 'starttime', get_string('startdate', 'scheduler'));
-        $mform->setDefault('starttime', time());
-        $mform->addHelpButton('starttime', 'startdate', 'scheduler');
+        // $mform->addElement('date_selector', 'starttime', get_string('startdate', 'scheduler'));
+        // $mform->setDefault('starttime', time());
+        // $mform->addHelpButton('starttime', 'startdate', 'scheduler');
 
         // // Start and end time
         $hours = array();
         $minutes = array();
-        for ($i=0; $i<=23; $i++) {
-            if($i == 0){
-                $hours[$i] = sprintf("%d", 12) . " am";
-            }
-            elseif($i < 12){
-                $hours[$i] = sprintf("%d", $i) . " am";
-            }
-            elseif($i == 12){
-                $hours[$i] = sprintf("%d", 12) . " pm";
-            }
-            else{
-                $hours[$i] = sprintf("%d", $i-12) . " pm";
-            }
+        for ($i=0; $i<=11; $i++) 
+        {
+            if($i == 0)
+                $hours[$i] = sprintf("%d", 12);
+            else
+                $hours[$i] = sprintf("%d", $i);
         }
-        for ($i=0; $i<60; $i+=5) {
+        for ($i=0; $i<60; $i+=5) 
+        {
             $minutes[$i] = sprintf("%02d", $i);
         }
+        $ampm = array();
+        $ampm[0] = "AM";
+        $ampm[1] = "PM";
         $starttimegroup = array();
-        $starttimegroup[] = $mform->createElement('select', 'starthoursingle', get_string('hour', 'form'), $hours);
-        $starttimegroup[] = $mform->createElement('select', 'startminutesingle', get_string('minute', 'form'), $minutes);
-        $mform->addGroup($starttimegroup, 'starttimesingle', get_string('starttime', 'scheduler'), null, false);
-        $mform->addHelpButton('starttimesingle', 'starttime', 'scheduler');
+        $starttimegroup[] = $mform->createElement('date_selector', 'starttime', get_string('startdate', 'scheduler'));
+        $starttimegroup[] = $mform->createElement('select', 'starthour', get_string('hour', 'form'), $hours);
+        $starttimegroup[] = $mform->createElement('select', 'startminute', get_string('minute', 'form'), $minutes);
+        $starttimegroup[] = $mform->createElement('select', 'startampm', '', $ampm);
+
+        $mform->addGroup($starttimegroup, 'starttime', get_string('starttime', 'scheduler'), null, false);
+        $mform->addHelpButton('starttime', 'starttime', 'scheduler');
+
+
 
 
 
@@ -227,7 +229,7 @@ class scheduler_editslot_form extends scheduler_slotform_base {
 
         // Appointment notes
         $repeatarray[] = $mform->createElement('editor', 'appointmentnote', get_string('appointmentnotes', 'scheduler'),
-                          array('rows' => 3, 'columns' => 60), array('collapsed' => true));
+          array('rows' => 3, 'columns' => 60), array('collapsed' => true));
 
         if (isset($this->_customdata['repeats'])) {
             $repeatno = $this->_customdata['repeats'];
@@ -246,13 +248,27 @@ class scheduler_editslot_form extends scheduler_slotform_base {
         $repeateloptions['appointhead']['expanded'] = true;
 
         $this->repeat_elements($repeatarray, $repeatno, $repeateloptions,
-                        'appointment_repeats', 'appointment_add', 1, get_string('addappointment', 'scheduler'));
+            'appointment_repeats', 'appointment_add', 1, get_string('addappointment', 'scheduler'));
 
         $this->add_action_buttons();
 
     }
 
-    public function validation($data, $files) {
+    public function validation($data, $files) 
+    {
+        $hours = $data['starthour'];
+        $minutes = $data['startminute'];
+
+        if($data['startampm'] == 1)
+            $hours += 12;
+        
+        $hours = $hours * 60 * 60;
+        $minutes = $minutes * 60;
+
+        $data['starttime'] += $hours + $minutes;
+
+
+
         $errors = parent::validation($data, $files);
 
         // Check number of appointments vs exclusivity
@@ -286,9 +302,9 @@ class scheduler_editslot_form extends scheduler_slotform_base {
             // for other scheduler, we check independently of exclusivity. Any slot here conflicts
             // for this scheduler, we check against exclusivity. Any complete slot here conflicts
             $conflicts_remote = scheduler_get_conflicts($this->scheduler->id,
-                            $data['starttime'], $data['starttime'] + $data['duration'] * 60, $data['teacherid'], 0, SCHEDULER_OTHERS, false);
+                $data['starttime'], $data['starttime'] + $data['duration'] * 60, $data['teacherid'], 0, SCHEDULER_OTHERS, false);
             $conflicts_local = scheduler_get_conflicts($this->scheduler->id,
-                            $data['starttime'], $data['starttime'] + $data['duration'] * 60, $data['teacherid'], 0, SCHEDULER_SELF, true);
+                $data['starttime'], $data['starttime'] + $data['duration'] * 60, $data['teacherid'], 0, SCHEDULER_SELF, true);
             if (!$conflicts_remote) {
                 $conflicts_remote = array();
             }
@@ -315,25 +331,25 @@ class scheduler_editslot_form extends scheduler_slotform_base {
 
                     if ($students) {
                         $slotmsg .= ' (';
-                        $appointed = array();
-                        foreach ($students as $astudent) {
-                            $appointed[] = fullname($astudent);
-                        }
-                        if (count ($appointed)) {
-                            $slotmsg .= implode(', ', $appointed);
-                        }
-                        unset ($appointed);
-                        $slotmsg .= ')';
-                        $slotmsg = html_writer::tag('b', $slotmsg);
-                    }
-                    $msg .= html_writer::div($slotmsg);
-                }
+                            $appointed = array();
+                            foreach ($students as $astudent) {
+                                $appointed[] = fullname($astudent);
+                            }
+                            if (count ($appointed)) {
+                                $slotmsg .= implode(', ', $appointed);
+                            }
+                            unset ($appointed);
+                            $slotmsg .= ')';
+$slotmsg = html_writer::tag('b', $slotmsg);
+}
+$msg .= html_writer::div($slotmsg);
+}
 
-                $errors['starttime'] = $msg;
-            }
-        }
-        return $errors;
-    }
+$errors['starttime'] = $msg;
+}
+}
+return $errors;
+}
 }
 
 
@@ -359,7 +375,7 @@ class scheduler_addsession_form extends scheduler_slotform_base {
         // Enclose all dayspan in a div that will be hidden together
         $mform->addElement('html', '<div class="spandays" hidden=true>');
         $mform->addElement('date_selector', 'rangeend', get_string('enddate', 'scheduler'),
-                            array('optional'  => true, 'startyear' => 2000));
+            array('optional'  => true, 'startyear' => 2000));
 
         
         // Help button for datepicker
@@ -506,16 +522,16 @@ class scheduler_addsession_form extends scheduler_slotform_base {
 
         // check that the start time is not in the past.
         // if( [start time] < [time right now] )
-		if( ( ($starttime * 60) + $data['rangestart']) < time())
-		{
-			$errors['starttime'] = get_string('starttimeinpast', 'scheduler');
-		}
+        if( ( ($starttime * 60) + $data['rangestart']) < time())
+        {
+         $errors['starttime'] = get_string('starttimeinpast', 'scheduler');
+     }
 
 
         // Break must be nonnegative
-        if ($data['break'] < 0) {
-            $errors['breakgroup'] = get_string('breaknotnegative', 'scheduler');
-        }
+     if ($data['break'] < 0) {
+        $errors['breakgroup'] = get_string('breaknotnegative', 'scheduler');
+    }
 
         // TODO conflict checks
 
@@ -567,6 +583,6 @@ class scheduler_addsession_form extends scheduler_slotform_base {
                         }
          */
 
-        return $errors;
-    }
-}
+                        return $errors;
+                    }
+                }
