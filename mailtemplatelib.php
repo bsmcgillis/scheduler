@@ -107,6 +107,16 @@ function scheduler_send_email_from_template($recipient, $sender, $course, $title
     $plainMail = scheduler_compile_mail_template($template, 'plain', $vars, $modulename, $lang);
     $htmlMail = scheduler_compile_mail_template($template, 'html', $vars, $modulename, $lang);
 
+
+    // TODO: Delete all printouts here
+    static $printed;
+    if(!$printed){
+
+        echo "<button type='button' onclick=\"$('.email').slideToggle()\">For grading purposes only. Toggle email output</button>";
+        $printed = true;
+    }
+    
+    echo "<div class='email' hidden>";
     echo "<h1>Email to ".fullname($recipient)."</h1><table style='border: 1px solid black;' >";
     echo "<tr style='border: 1px solid black;'><td style='padding: 10px; border: 1px solid black;'>Recipient: </td><td style='padding: 10px; border: 1px solid black;'>";
     echo fullname($recipient). "&nbsp;&nbsp;&nbsp;&nbsp;".$recipient->email;
@@ -118,20 +128,22 @@ function scheduler_send_email_from_template($recipient, $sender, $course, $title
     echo "</td></tr>";
 
 
-    echo "<tr style='padding: 10px; border: 1px solid black;'><td style='padding: 10px; border: 1px solid black;'>subject: </td><td style='padding: 10px; border: 1px solid black;'>";
+    echo "<tr style='padding: 10px; border: 1px solid black;'><td style='padding: 10px; border: 1px solid black;'>Subject: </td><td style='padding: 10px; border: 1px solid black;'>";
     print_r($subject);
     echo "</td></tr>";
     
 
-    echo "<tr style='padding: 10px; border: 1px solid black;'><td style='padding: 10px; border: 1px solid black;'>PlainMail: </td><td style='padding: 10px; border: 1px solid black;'>";
+    echo "<tr style='padding: 10px; border: 1px solid black;'><td style='padding: 10px; border: 1px solid black;'>Plain Mail: </td><td style='padding: 10px; border: 1px solid black;'>";
     print_r($plainMail);
     echo "</td></tr>";
 
-    echo "<tr style='padding: 10px; border: 1px solid black;'><td style='padding: 10px; border: 1px solid black;'>HTMLMail: </td><td style='padding: 10px; border: 1px solid black;'>";
+    echo "<tr style='padding: 10px; border: 1px solid black;'><td style='padding: 10px; border: 1px solid black;'>HTML Mail: </td><td style='padding: 10px; border: 1px solid black;'>";
     print_r($htmlMail);
     echo "</td></tr></table>";
 
-    // Uncomment to actual send email
+    echo "</div>";
+
+    // Uncomment to actually send email
     // $res = email_to_user ($recipient, $sender, $subject, $plainMail, $htmlMail);
     // return $res;
     return 0;
