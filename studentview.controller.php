@@ -36,16 +36,12 @@ if ($action == 'savechoice') {
     }
 
     $appointgroup = optional_param('appointgroup', 0, PARAM_INT);
-
-    echo "<h2>BEGIN ";
-    print_r(count(groups_get_members($appointgroup)));
-    echo " END</h2>";
-
+    $groupname = '';
     $requiredcapacity = 1;
     if ($appointgroup) {
         $groupmembers = groups_get_members($appointgroup);
+        $groupname = groups_get_group_name($appointgroup);
         $requiredcapacity = count($groupmembers);
-
     }
 
     $errormessage = '';
@@ -149,11 +145,20 @@ if ($action == 'savechoice') {
 
                 // Notify the teacher.
                 if ($scheduler->allownotifications) {
-                    // scheduler_send_email_from_template($teacher, $student, $course, 'cancelledbystudent', 'cancelled', $vars, 'scheduler');
+                    scheduler_send_email_from_template($teacher, $student, $course, 'cancelledbystudent', 'cancelled', $vars, 'scheduler'); 
                 }
             }
         }
     }
+
+    // Get teacher's record once
+    $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
+
+    // Get logged in student who requested the change
+    $studentuser = $DB->get_record('user', array('id' => $USER->id));
+
+    // Names of those in the group
+    $studentnames = array();
 
     foreach ($slotidstoadd as $slotid) {
         $newslot = $scheduler->get_slot($slotid);
@@ -170,19 +175,50 @@ if ($action == 'savechoice') {
 
             \mod_scheduler\event\booking_added::create_from_slot($newslot)->trigger();
 
-            // Notify the teacher.
+            // Notify the student.
             if ($scheduler->allownotifications) {
                 $student = $DB->get_record('user', array('id' => $appointment->studentid));
-                $teacher = $DB->get_record('user', array('id' => $slot->teacherid));
-                $vars = scheduler_get_mail_variables($scheduler, $newslot, $teacher, $student, $course, $teacher);                
+
+                // Add the student's name to be sent to the teacher
+                $studentnames[] = fullname($student);
                 
-                
-                scheduler_send_email_from_template($teacher, $student, $course, 'newappointment', 'applied', $vars, 'scheduler');
-                scheduler_send_email_from_template($student, $teacher, $course, 'newappointment', 'applied', $vars, 'scheduler');
+                $vars = scheduler_get_mail_variables($scheduler, $newslot, $teacher, $student, $course, $student);    
+
+                // Add variables relating to group            
+                $vars['STUDENTUSER'] = fullname($studentuser);
+                $vars['GROUPNAME'] = $groupname;
+
+                // Send the student the correct email based on whether they're in a group or not
+                if(empty($groupname)){
+                    scheduler_send_email_from_template($student, $teacher, $course, 'newappointment', 'appliedstudent', $vars, 'scheduler');
+                }
+                else {
+                    scheduler_send_email_from_template($student, $teacher, $course, 'newappointment', 'appliedstudentgroup', $vars, 'scheduler');
+                }
+            }
+        }
+        // Notify the teacher
+        if($scheduler->allownotifications){
+            
+            $vars = scheduler_get_mail_variables($scheduler, $newslot, $teacher, $studentuser, $course, $teacher);                
+
+            // Add variables relating to group
+            $vars['STUDENTNAMES'] = implode(", ", $studentnames);
+            $vars['GROUPNAME'] = $groupname;
+
+            // Email to student from teacher saying the appointment has been scheduled
+            if(empty($groupname)) {
+                // Scheduling an individual
+                scheduler_send_email_from_template($teacher, $studentuser, $course, 'newappointment', 'applied', $vars, 'scheduler');
+            }
+            else {
+                // Scheduling a group
+                scheduler_send_email_from_template($teacher, $studentuser, $course, 'newappointment', 'appliedgroup', $vars, 'scheduler');
             }
         }
         $newslot->save();
     }
+
 }
 
 // *********************************** Disengage from the slot (only the current student) ******************************/
@@ -207,7 +243,7 @@ if ($action == 'disengage') {
                 $student = $DB->get_record('user', array('id' => $USER->id));
                 $teacher = $DB->get_record('user', array('id' => $oldslot->teacherid));
                 $vars = scheduler_get_mail_variables($scheduler, $oldslot, $teacher, $student, $course, $teacher);
-                // scheduler_send_email_from_template($teacher, $student, $COURSE, 'cancelledbystudent', 'cancelled', $vars, 'scheduler');
+                scheduler_send_email_from_template($teacher, $student, $COURSE, 'cancelledbystudent', 'cancelled', $vars, 'scheduler');
             }
         }
     }

@@ -414,6 +414,7 @@ $string['visible_help'] = '<p>This determines the visibility of the Scheduler.</
 
 /* ***********  E-mail templates from here on ************ */
 
+// Teacher from a lone student
 $string['email_applied_subject'] = '{$a->course_short}: New appointment';
 $string['email_applied_plain'] = 'An appointment has been applied for on {$a->date} at {$a->time},
 by the student {$a->attendee} for the course:
@@ -422,12 +423,66 @@ by the student {$a->attendee} for the course:
 
 using the scheduler titled "{$a->module}" on the website: {$a->site}.';
 
-$string['email_applied_html'] = '<p>An appointment has been applied for on {$a->date} at {$a->time},<br/>
+$string['email_applied_html'] = '<p>An appointment has been applied for on <strong>{$a->date}</strong> at <strong>{$a->time}</strong>,<br/>
 by the student <a href="{$a->attendee_url}">{$a->attendee}</a> for the course:
 
 <p>{$a->course_short}: <a href="{$a->course_url}">{$a->course}</a></p>
 
 <p>using the scheduler titled "<em>{$a->module}</em>" on the website: <a href="{$a->site_url}">{$a->site}</a>.</p>';
+
+// Teacher from a group
+$string['email_appliedgroup_subject'] = '{$a->course_short}: New appointment';
+$string['email_appliedgroup_plain'] = 'An appointment has been applied for on {$a->date} at {$a->time},
+by the student {$a->attendee} on behalf of group: {$a->groupname} 
+consisting of {$a->studentnames} for the course:
+
+{$a->course_short}: {$a->course}
+
+using the scheduler titled "{$a->module}" on the website: {$a->site}.';
+
+$string['email_appliedgroup_html'] = '<p>An appointment has been applied for on <strong>{$a->date}</strong> at <strong>{$a->time}</strong>,<br/>
+by the student <a href="{$a->attendee_url}">{$a->attendee}</a> on behalf of group:
+<p><em>{$a->groupname}</em> consisting of <em>{$a->studentnames}</em></p>
+for the course:
+
+<p>{$a->course_short}: <a href="{$a->course_url}">{$a->course}</a></p>
+
+<p>using the scheduler titled "<em>{$a->module}</em>" on the website: <a href="{$a->site_url}">{$a->site}</a>.</p>';
+
+// Student by themself
+$string['email_appliedstudent_subject'] = '{$a->course_short}: New appointment';
+$string['email_appliedstudent_plain'] = 'You have applied for an appointment on {$a->date} at {$a->time},
+for the course:
+
+{$a->course_short}: {$a->course}
+
+using the scheduler titled "{$a->module}" on the website: {$a->site}.';
+
+$string['email_appliedstudent_html'] = '<p>You have applied for an appointment on <strong>{$a->date}</strong> at <strong>{$a->time}</strong>,<br/>
+for the course:
+
+<p>{$a->course_short}: <a href="{$a->course_url}">{$a->course}</a></p>
+
+<p>using the scheduler titled "<em>{$a->module}</em>" on the website: <a href="{$a->site_url}">{$a->site}</a>.</p>';
+
+
+// Student in a group
+$string['email_appliedstudentgroup_subject'] = '{$a->course_short}: New appointment';
+$string['email_appliedstudentgroup_plain'] = 'An appointment has been applied for on {$a->date} at {$a->time},
+by the student {$a->studentuser} on behalf of {$a->groupname} for the course:
+
+{$a->course_short}: {$a->course}
+
+using the scheduler titled "{$a->module}" on the website: {$a->site}.';
+
+$string['email_appliedstudentgroup_html'] = '<p>An appointment has been applied for on <strong>{$a->date}</strong> at <strong>{$a->time}</strong>,<br/>
+by group member {$a->studentuser} on behalf of <em>{$a->groupname}</em> for the course:
+
+<p>{$a->course_short}: <a href="{$a->course_url}">{$a->course}</a></p>
+
+<p>using the scheduler titled "<em>{$a->module}</em>" on the website: <a href="{$a->site_url}">{$a->site}</a>.</p>';
+
+
 
 $string['email_cancelled_subject'] = '{$a->course_short}: Appointment cancelled or moved by a student';
 
