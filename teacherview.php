@@ -210,20 +210,20 @@ if($action == 'addslot' || $action == 'addsession'){
     else {
 
         // Button to toggle both 
-        echo "<a href='#' class='btn btn-default' onclick='toggleForm()'>".get_string('switchform', 'scheduler')."</a>"; 
-
+        echo html_writer::tag('a', get_string('switchform', 'scheduler'), array('class' => 'btn btn-default', 'onclick' => 'toggleForm()'));
+        
         // Place repeated slot form and heading inside a div
-        echo "<div id='repeated_slot' class='slotForm'>";
+        echo html_writer::start_tag('div', array('class' => 'slotForm', 'id' => 'repeated_slot'));
         echo $output->heading(get_string('addsession', 'scheduler'));
         $mform_session->display();
-        echo "</div>";
+        echo html_writer::end_tag('div');
 
 
         // Place single slot form and heading inside a div
-        echo "<div id='single_slot' class='slotForm' hidden>";
+        echo html_writer::start_tag('div', array('class' => 'slotForm', 'id' => 'single_slot', 'hidden' => 'true'));
         echo $output->heading(get_string('addsingleslot', 'scheduler'));
         $mform_slot->display();
-        echo "</div>";
+        echo html_writer::end_div('div');
 
         echo $output->footer($course);
         die;
