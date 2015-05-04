@@ -1,7 +1,14 @@
 /*
-* Hide the grade options when the page first loads. Have grab the parent element and hide children
-* because the labels don't have IDs. And elements are not grouped together very well.
-*/
+ * Created May 4, 2015 by Too Many Cooks
+ *      Braden Caywood
+ *      Derek Johnson
+ *      Blake McGillis
+ *      Greg Smith
+ *      Andrew Van Tassell
+ *
+ * Hide the grade options when the page first loads. Have grab the parent element and hide children
+ * because the labels don't have IDs. And elements are not grouped together very well.
+ */
 $(document).ready(function() {
     
     //Grab the parent element

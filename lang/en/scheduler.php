@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * Modified May 4, 2015 by Too Many Cooks
+ *      Braden Caywood
+ *      Derek Johnson
+ *      Blake McGillis
+ *      Greg Smith
+ *      Andrew Van Tassell
+ */
 $string['pluginname'] = 'Scheduler';
 $string['pluginadministration'] = 'Scheduler administration';
 $string['modulename'] = 'Scheduler';

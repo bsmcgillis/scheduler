@@ -7,6 +7,14 @@
  * @subpackage scheduler
  * @copyright  2011 Henning Bostelmann and others (see README.txt)
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ *
+ *
+ * Modified May 4, 2015 by Too Many Cooks
+ *      Braden Caywood
+ *      Derek Johnson
+ *      Blake McGillis
+ *      Greg Smith
+ *      Andrew Van Tassell
  */
 
 //Require files to include jQuery

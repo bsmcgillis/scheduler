@@ -1,3 +1,12 @@
+/*
+ * Created May 4, 2015 by Too Many Cooks
+ *      Braden Caywood
+ *      Derek Johnson
+ *      Blake McGillis
+ *      Greg Smith
+ *      Andrew Van Tassell
+ */
+
 $(document).ready(function(){
 
 	// Move end datepicker enabled checkbox to 
